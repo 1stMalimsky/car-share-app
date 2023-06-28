@@ -1,6 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Belanosima&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
+
 .gridContainerHomePage {
   background-image: url("../public/imgs/homePageCar.png");
   background-size: cover;
@@ -18,14 +17,6 @@
   font-size: 3.5em !important;
 }
 
-.font {
-  font-family: belanosima !important;
-  text-decoration: none;
+.border {
+  //border: 2px solid #000;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: roboto, sans-serif;
-}/*# sourceMappingURL=index.css.map */
