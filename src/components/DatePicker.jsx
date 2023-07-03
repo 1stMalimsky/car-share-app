@@ -1,44 +1,54 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { dateActions } from "../store/dateHandler";
 
-const DatePickers = ({ dateText, dateType }) => {
-  const [dateState, setDateState] = useState("");
+const DatePickers = ({ dateText, onChange }) => {
   const dispatch = useDispatch();
 
-  const handleDateChange = (date) => {
-    setDateState(date);
-    if (dateType == "start") {
-      dispatch(setDateState(date));
+  const isDarkTheme = useSelector(
+    (storePie) => storePie.darkThemeSlice.isDarkTheme
+  );
+
+  const handleDateChange = (newDate) => {
+    if (dateText === "Pickup Date" && newDate == null) {
+      return dispatch(dateActions.setStartDate("DD/MM/YY"));
     }
-    if (dateType == "end") {
-      dispatch(setDateState(date));
+    if (dateText === "Return Date" && newDate == null) {
+      return dispatch(dateActions.setEndDate("DD/MM/YY"));
+    }
+    if (dateText === "Pickup Date") {
+      let startTimeStamp = newDate.$d.getTime();
+      dispatch(dateActions.setStartDate(startTimeStamp));
+    }
+    if (dateText === "Return Date") {
+      let endTimeStamp = newDate.$d.getTime();
+      dispatch(dateActions.setEndDate(endTimeStamp));
     }
   };
-
   return (
     <Fragment>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label={"Pick a " + dateText}
-          value={dateState}
-          sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
-          onChange={handleDateChange}
-        />
-        ;
+        {isDarkTheme ? (
+          <DatePicker
+            label={dateText}
+            onChange={handleDateChange}
+            format="DD-MM-YYYY"
+            className={"datePickerDark"}
+          />
+        ) : (
+          <DatePicker
+            label={dateText}
+            onChange={handleDateChange}
+            format="DD-MM-YYYY"
+            className={"datePicker"}
+          />
+        )}
       </LocalizationProvider>
     </Fragment>
   );
 };
-{
-  /* <DateTimePicker
-  label={"Pick a " + dateText}
-  value={dateState}
-  onChange={handleDateChange}
-  sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
-/>; */
-}
 
 export default DatePickers;

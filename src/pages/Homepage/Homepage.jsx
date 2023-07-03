@@ -3,12 +3,23 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import DatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import useDatePicker from "../../hooks/useDatePicker";
+import Container from "@mui/material/Container";
 
 const Homepage = () => {
+  const yourChoise = useDatePicker();
+
+  const handleSearchClick = () => {
+    let newChoise = yourChoise;
+    console.log("yourChoise=> ", newChoise);
+  };
+
   return (
-    <Box>
-      <Grid container spacing={2} className={"gridContainerHomePage"}>
-        <Grid item xs={12} className={"border"}>
+    <Container maxWidth="lg">
+      <Grid container className={"gridContainerHomePage"}>
+        <Grid item xs={12}>
           <Typography variant="h1" className="mainHeader">
             Your needs Our Cars
           </Typography>
@@ -27,27 +38,30 @@ const Homepage = () => {
             color="initial"
             style={{ fontSize: "1.2rem", padding: 15 }}
           >
-            Here you will a find community of people that gladly puts their car
+            Here you will find a community of people that gladly puts their car
             up for daily hires. We make renting a car more personal than ever.
             Feel free to browse our collections and consider signing up to take
             full advantage of everything we have to offer.
             <br /> Bon Voyage!
           </Typography>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ marginLeft: 2 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-              <DatePicker dateText="start date" />
+            <Grid item xs={12} md={5}>
+              <DatePicker dateText="Pickup Date" />
             </Grid>
-            <Grid item xs={12} md={4}>
-              <DatePicker dateText="return date" />
+            <Grid item xs={12} md={5}>
+              <DatePicker dateText="Return Date" />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={2}>
               <Button
                 variant="contained"
+                onClick={handleSearchClick}
                 style={{ width: "10em", height: "4em" }}
               >
-                SEARCH
+                <Typography variant="body1" className={"mainButton"}>
+                  SEARCH
+                </Typography>
               </Button>
             </Grid>
           </Grid>
@@ -56,7 +70,7 @@ const Homepage = () => {
           <Typography variant="body1">Not a memebr? Join here!</Typography>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 };
 

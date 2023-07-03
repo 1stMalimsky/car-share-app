@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Router from './routes/Router';
 import { Container } from '@mui/material';
-import NavBar from './components/NavBar/NavBar';
+import Navbar from "./components/NavBar/MuiNav"
 import "./index.css"
 import { useSelector } from "react-redux";
 
@@ -25,7 +25,7 @@ function App() {
   return (
     <ThemeProvider theme={isDarkTheme ? createTheme(dark) : createTheme(light)}>
       <Container>
-        <header><NavBar /></header>
+        <header><Navbar /></header>
         <main>
           <Router />
         </main>

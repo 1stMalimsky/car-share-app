@@ -7,9 +7,13 @@ const pages = [
         url: ROUTES.HOME,
     },
     {
-        label: "ABOUT",
+        label: "ABOUT US",
         url: ROUTES.ABOUT,
     },
+    {
+        label: "OUR CARS",
+        url: ROUTES.OURCARS
+    }
 ];
 //not logged in users
 const notAuthPages = [
@@ -25,31 +29,25 @@ const notAuthPages = [
 //logged in users
 const loggedInPages = [
     {
-        label: "RENT A CAR",
-        url: ROUTES.ADDCAR,
+        label: "LIKED CARS",
+        url: ROUTES.LIKEDCARS,
+    },
+    {
+        label: "MY CARS",
+        url: ROUTES.MYCARS,
     },
     {
         label: "LOGOUT",
         url: ROUTES.LOGOUT,
     },
 ];
-//biz pages
-const bizPages = [
-    {
-        label: "MY CARS",
-        url: ROUTES.MYCARS,
-    },
-    {
-        label: "ADD NEW CAR",
-        url: ROUTES.ADDCAR
-    }
-];
+
 //admin pages
 const adminPages = [
     {
-        label: "SITE CARS",
-        url: ROUTES.SITECARS,
-    },
+        label: "MY CONTROLS",
+        url: ROUTES.MYCONTROLS
+    }
 ];
 
-export { pages, adminPages, bizPages, loggedInPages, notAuthPages };
+export { pages, adminPages, loggedInPages, notAuthPages };

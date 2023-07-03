@@ -1,9 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const currentDate = new Date();
-
 const initialState = {
-    startDate: currentDate,
+    startDate: "",
     endDate: "",
 };
 
@@ -11,16 +9,16 @@ const dateSlice = createSlice({
     name: "dateHandler",
     initialState,
     reducers: {
-        setStartDate: (state, action) => {
-            state.startDate = action.payload;
+        setStartDate: (initialState, action) => {
+            initialState.startDate = action.payload;
         },
-        setEndDate: (state, action) => {
-            state.endDate = action.payload;
+        setEndDate: (initialState, action) => {
+            initialState.endDate = action.payload;
         },
     },
 });
 
 
-export const dateAction = dateSlice.actions;
+export const dateActions = dateSlice.actions;
 
 export default dateSlice.reducer;
