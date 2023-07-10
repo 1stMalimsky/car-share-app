@@ -13,7 +13,7 @@
 }
 
 .mainHeader {
-  margin-top: -0.5em !important;
+  margin-top: 0.3em !important;
   padding: 0em 0 0.2em 0 !important;
   font-family: belanosima !important;
   font-size: 3.5em !important;
@@ -22,6 +22,10 @@
 .mainButton {
   font-family: belanosima !important;
   font-size: 1em;
+}
+
+.homepageHeaderBox {
+  background-color: rgba(255, 255, 255, 0.39);
 }
 
 .datePicker {

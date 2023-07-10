@@ -14,7 +14,7 @@
 }
 
 .mainHeader {
-  margin-top: -0.5em !important;
+  margin-top: 0.3em !important;
   padding: 0em 0 0.2em 0 !important;
   font-family: belanosima !important;
   font-size: 3.5em !important;
@@ -23,6 +23,10 @@
 .mainButton {
   font-family: belanosima !important;
   font-size: 1em;
+}
+
+.homepageHeaderBox {
+  background-color: rgba(255, 255, 255, 0.39);
 }
 
 .datePicker {
@@ -74,19 +78,50 @@
   align-items: center;
 }
 
-.avatarBox {
+.headerBox {
   width: 100%;
-  height: 20em;
+  height: 25em;
   background-image: url("../public/imgs/registerHeader.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-.avatarBox .registerHeader {
-  display: inline-block;
+.headerBox .registerHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.headerBox .registerHeaderBoxDark {
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.headerBox .registerHeader {
   padding: 0.1em 0.5em 0.1em 0.5em;
   margin: 0 0.8em 0 0;
-  background-color: rgba(255, 255, 255, 0.6);
+}
+.headerBox .registerHeader.MuiTypography-body1 {
+  font-size: 1.5em;
+}
+
+.carCardGrid {
+  border: 1px solid #000;
+}
+
+.imgUrl {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.carImg {
+  width: 10% !important;
+  height: 10%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 * {

@@ -3,17 +3,21 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import DatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import useDatePicker from "../../hooks/useDatePicker";
 import Container from "@mui/material/Container";
+import ROUTES from "../../routes/ROUTES";
 
 const Homepage = () => {
+  const navigate = useNavigate();
   const yourChoise = useDatePicker();
 
   const handleSearchClick = () => {
     let newChoise = yourChoise;
     console.log("yourChoise=> ", newChoise);
+    navigate(ROUTES.INVENTORY);
   };
 
   return (
@@ -21,15 +25,10 @@ const Homepage = () => {
       <Grid container className={"gridContainerHomePage"}>
         <Grid item xs={12}>
           <Typography variant="h1" className="mainHeader">
-            Your needs Our Cars
+            Your needs Their Cars
           </Typography>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          style={{ backgroundColor: "rgba(255, 255, 255, 0.39)" }}
-        >
+        <Grid item xs={12} md={4} className="homepageHeaderBox">
           <Typography variant="h4" color="initial">
             Welcome to CarShare!
           </Typography>

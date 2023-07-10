@@ -13,6 +13,7 @@ import ROUTES from "../../routes/ROUTES";
 import RegisterFieldComponent from "./RegisterFieldComponent";
 import registerInputs from "./registerInputs";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const RegisterPage = () => {
   const [inputState, setInputState] = useState(
@@ -20,6 +21,9 @@ const RegisterPage = () => {
   );
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [disableButtonState, setDisableButtonState] = useState(true);
+  const isDarkTheme = useSelector(
+    (storePie) => storePie.darkThemeSlice.isDarkTheme
+  );
   const navigate = useNavigate();
   useEffect(() => {
     if (
@@ -78,10 +82,30 @@ const RegisterPage = () => {
   return (
     <Container component="main" maxWidth="lg">
       <Box className="registerBox">
-        <Box className="avatarBox">
-          <Typography component="h1" variant="h3" className="registerHeader">
-            Register Page
-          </Typography>
+        <Box className="headerBox">
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              md={7}
+              className={
+                isDarkTheme ? "registerHeaderBoxDark" : "registerHeaderBox"
+              }
+            >
+              <Typography
+                component="h1"
+                variant="h3"
+                className="registerHeader"
+              >
+                Register Page
+              </Typography>
+              <Typography variant="body1" className="registerHeader">
+                Let's get started!If you'd like to join our community, we'll
+                need some basic information about you. Please fill in the boxes
+                below.
+              </Typography>
+            </Grid>
+          </Grid>
         </Box>
 
         <Box component="div" noValidate sx={{ mt: 3 }}>
