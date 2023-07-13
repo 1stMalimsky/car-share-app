@@ -1,6 +1,6 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDispatch, useSelector } from "react-redux";
 import { dateActions } from "../store/dateHandler";
@@ -13,6 +13,10 @@ const DatePickers = ({ dateText, onChange }) => {
   );
 
   const handleDateChange = (newDate) => {
+    onChange(newDate);
+  };
+
+  /* const handleDateChange = (newDate) => {
     if (dateText === "Pickup Date" && newDate == null) {
       return dispatch(dateActions.setStartDate("DD/MM/YY"));
     }
@@ -20,6 +24,7 @@ const DatePickers = ({ dateText, onChange }) => {
       return dispatch(dateActions.setEndDate("DD/MM/YY"));
     }
     if (dateText === "Pickup Date") {
+      console.log("pickup date", newDate);
       let startTimeStamp = newDate.$d.getTime();
       dispatch(dateActions.setStartDate(startTimeStamp));
     }
@@ -27,7 +32,7 @@ const DatePickers = ({ dateText, onChange }) => {
       let endTimeStamp = newDate.$d.getTime();
       dispatch(dateActions.setEndDate(endTimeStamp));
     }
-  };
+  }; */
   return (
     <Fragment>
       <LocalizationProvider dateAdapter={AdapterDayjs}>

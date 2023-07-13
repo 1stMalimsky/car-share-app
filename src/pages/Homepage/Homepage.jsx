@@ -3,29 +3,59 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import DatePicker from "../../components/DatePicker";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { dateActions } from "../../store/dateHandler";
 import { useEffect, useState } from "react";
 import useDatePicker from "../../hooks/useDatePicker";
 import Container from "@mui/material/Container";
 import ROUTES from "../../routes/ROUTES";
+import { toast } from "react-toastify";
 
 const Homepage = () => {
-  const navigate = useNavigate();
-  const yourChoise = useDatePicker();
+  const [chosenDates, setChosenDates] = useState({
+    start: "",
+    end: "",
+  });
 
-  const handleSearchClick = () => {
-    let newChoise = yourChoise;
-    console.log("yourChoise=> ", newChoise);
-    navigate(ROUTES.INVENTORY);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  //const yourChoice = useDatePicker();
+  const currentDate = new Date();
+
+  const handleDateChange = (dateText, newDate) => {
+    if (newDate == null) {
+      return;
+    }
+    setChosenDates((prevDates) => ({
+      ...prevDates,
+      [dateText.toLowerCase()]: newDate.$d.getTime(),
+    }));
   };
 
+  console.log(chosenDates);
+  //console.log("your Choise", yourChoice);
+  const handleSearchClick = () => {
+    const adjustedCurrentDate = currentDate.setHours(0, 0, 0, 0);
+    if (
+      isNaN(chosenDates.start) ||
+      isNaN(chosenDates.end) ||
+      chosenDates.start < adjustedCurrentDate ||
+      chosenDates.end < adjustedCurrentDate ||
+      chosenDates.start >= chosenDates.end
+    ) {
+      return toast.error("Please enter valid dates!");
+    }
+    dispatch(dateActions.setStartDate(chosenDates.start));
+    dispatch(dateActions.setEndDate(chosenDates.end));
+    navigate(ROUTES.INVENTORY);
+  };
   return (
     <Container maxWidth="lg">
       <Grid container className={"gridContainerHomePage"}>
         <Grid item xs={12}>
           <Typography variant="h1" className="mainHeader">
-            Your needs Their Cars
+            You(r) need(s) Our Cars
           </Typography>
         </Grid>
         <Grid item xs={12} md={4} className="homepageHeaderBox">
@@ -47,10 +77,16 @@ const Homepage = () => {
         <Grid item xs={12} md={6} sx={{ marginLeft: 2 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={5}>
-              <DatePicker dateText="Pickup Date" />
+              <DatePicker
+                dateText="Pickup Date"
+                onChange={(newDate) => handleDateChange("start", newDate)}
+              />
             </Grid>
             <Grid item xs={12} md={5}>
-              <DatePicker dateText="Return Date" />
+              <DatePicker
+                dateText="Return Date"
+                onChange={(newDate) => handleDateChange("end", newDate)}
+              />
             </Grid>
             <Grid item xs={12} md={2}>
               <Button
@@ -66,7 +102,10 @@ const Homepage = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="body1">Not a memebr? Join here!</Typography>
+          <Typography variant="body1" className="homepageSignUpLink">
+            Not a memebr?
+            <Link to="/register">Join here!</Link>
+          </Typography>
         </Grid>
       </Grid>
     </Container>

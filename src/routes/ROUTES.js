@@ -3,6 +3,8 @@ const ROUTES = {
     REGISTER: "/register",
     LOGIN: "/login",
     INVENTORY: "car-inv",
+    ABOUT: "/about",
+    OURCARS: "/ourcars",
     PROFILE: "/profile",
     LOGOUT: "/logout",
 };

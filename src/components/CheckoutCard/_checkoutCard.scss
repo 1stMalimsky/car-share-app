@@ -1,0 +1,48 @@
+.checkoutCardGridContainer {
+  display: flex;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.checkoutCarCardItem {
+  padding: 0.6em;
+}
+
+.checkoutCarCardImgItem {
+  padding: 0.6em;
+  max-width: 20em !important;
+  max-height: 15em !important;
+}
+
+.checkoutCarCardBtnSection {
+  padding: 0.6em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .checkoutProfileAv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.checkoutImgURL {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.checkoutCardBtn {
+  margin-right: 0.8em !important;
+}
+
+.checkoutPrice {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding-top: 1em;
+  background-color: rgba(4, 4, 4, 0.1);
+  box-shadow: -2px -2px 3px 2px rgba(4, 4, 4, 0.1);
+  margin-left: auto;
+}

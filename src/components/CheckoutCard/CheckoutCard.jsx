@@ -9,7 +9,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Avatar } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
-const CarCardComponent = ({
+const CheckoutCard = ({
   id,
   title,
   description,
@@ -22,6 +22,7 @@ const CarCardComponent = ({
   houseNumber,
   phone,
   price,
+  totalPrice,
   handleLikeClick,
   handleCheckOutClick,
 }) => {
@@ -37,16 +38,15 @@ const CarCardComponent = ({
   };
 
   return (
-    <Grid container className="cardGridContainer">
+    <Grid container className="checkoutCardGridContainer">
       {/* img item */}
-      <Grid item xs={5} className="carCardImgItem">
-        <img src={url} alt={alt} className="imgURL" />
+      <Grid item xs={5} className="checkoutCarCardImgItem">
+        <img src={url} alt={alt} className="checkoutImgURL" />
       </Grid>
-
       <Grid item xs={7}>
         <Grid container sx={{ display: "flex", flexDirection: "row" }}>
           {/* title and description */}
-          <Grid item xs={12} className="carCardItem">
+          <Grid item xs={12} className="checkoutCarCardItem">
             <Typography gutterBottom variant="h5" component="div">
               {title}
             </Typography>
@@ -79,10 +79,10 @@ const CarCardComponent = ({
         </Grid>
       </Grid>
       {/* buttons */}
-      <Grid item xs={12} className="carCardBtnSection">
+      <Grid item xs={3} className="checkoutCarCardBtnSection">
         <Button
           variant="contained"
-          className="cardBtn"
+          className="checkoutCardBtn"
           onClick={handleCheckOut}
         >
           Rent
@@ -94,17 +94,25 @@ const CarCardComponent = ({
             <FavoriteIcon fontSize="large" />
           )}
         </IconButton>
-        <div className="profileAv">
-          <Typography variant="h6">About the owner</Typography>
+        <div className="checkoutProfileAv">
           <IconButton>
             <Avatar>
               <AccountBoxIcon />
             </Avatar>
           </IconButton>
+          <Typography variant="body2">About the owner</Typography>
         </div>
+      </Grid>
+      <Grid item xs={6}></Grid>
+      <Grid item xs={3} className="checkoutPrice">
+        <Typography variant="h6">
+          Your Total price is:
+          <br />
+          {totalPrice} ILS
+        </Typography>
       </Grid>
     </Grid>
   );
 };
 
-export default CarCardComponent;
+export default CheckoutCard;

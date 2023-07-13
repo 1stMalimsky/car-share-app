@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Belanosima&family=Roboto&display=swap");
 @import "./pages/Homepage/_homepage";
 @import "./components/NavBar/_navBar";
-@import "./pages/RegisterPage/registerPage";
-@import "./components//CarCard/carCard";
+@import "./pages/RegisterPage/_registerPage";
+@import "./components//CarCard/_carCard";
+@import "./pages/CarInv/_carInv";
+@import "./components//CheckoutCard/_checkoutCard";
 
 * {
   margin: 0;
