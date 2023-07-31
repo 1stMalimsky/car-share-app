@@ -11,6 +11,11 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
+
+        tempLogin(state) {
+            state.isLoggedIn = !state.isLoggedIn;
+        }
+        ,
         login(state, action) {
             if (!action || !action.payload) {
                 return;

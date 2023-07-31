@@ -46,7 +46,7 @@ const loggedInPages = [
 const adminPages = [
     {
         label: "MY CONTROLS",
-        url: ROUTES.MYCONTROLS
+        url: ROUTES.ADMIN
     }
 ];
 

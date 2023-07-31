@@ -1,14 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Belanosima&family=Roboto&display=swap");
-@import "./pages/Homepage/_homepage";
-@import "./components/NavBar/_navBar";
-@import "./pages/RegisterPage/_registerPage";
-@import "./components//CarCard/_carCard";
-@import "./pages/CarInv/_carInv";
-@import "./components//CheckoutCard/_checkoutCard";
+@import "./css/homepage";
+@import "./css/navBar";
+@import "./css/registerPage";
+@import "./css/carCard";
+@import "./css/carInv";
+@import "./css/checkoutCard";
+@import "./css/ourCarsPage";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: roboto, sans-serif;
+}
+
+.boxHeader {
+  padding: 10px;
+  background-color: red;
 }

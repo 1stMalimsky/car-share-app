@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import SortComponent from "../../components/SortComponent";
+import SortComponent from "../components/SortComponent";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import CarCardComponent from "../../components/CarCard/CarCard";
-import carCatalog from "../../components/CarCard/carCatalog";
-import useSort from "../../hooks/useSort";
+import CarCardComponent from "../components/CarCard/CarCard";
+import carCatalog from "../components/CarCard/carCatalog";
+import useSort from "../hooks/useSort";
 import { useSelector } from "react-redux";
-import DatePicker from "../../components/DatePicker";
+import DatePicker from "../components/DatePicker";
 import { useNavigate } from "react-router-dom";
 
 const CarInv = () => {

@@ -17,7 +17,7 @@ import ROUTES from "../../routes/ROUTES";
 import NavLinkComponent from "./NavLinkComponent";
 import SearchPartial from "./SearchPartial";
 import MiniMenuNavLink from "./MiniMenuNavLink";
-import { pages, adminPages, loggedInPages, notAuthPages } from "./navbarPages";
+import { pages, loggedInPages, notAuthPages, adminPages } from "./navbarPages";
 import logo from "../../assets/imgs/logo.png";
 import Button from "@mui/material/Button";
 
@@ -29,6 +29,13 @@ const MuiNavbar = () => {
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
+
+  /* TEMPORARY */
+  const logInClick = () => {
+    dispatch(authActions.tempLogin());
+  };
+  /* TEMPORARY */
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -73,6 +80,9 @@ const MuiNavbar = () => {
             )}
           </Box>
           <SearchPartial />
+          <Box>
+            <IconButton onClick={logInClick}>LogIn/logOut</IconButton>
+          </Box>
           <Box>
             <IconButton onClick={changeTheme}>
               {isDarkTheme ? (
@@ -140,14 +150,14 @@ const MuiNavbar = () => {
               {pages.map((page) => (
                 <MiniMenuNavLink
                   to={page.url}
-                  key={"miniLinks" + page.label}
+                  key={"miniLinks" + page.label + Date.now()}
                   onClick={handleCloseNavMenu}
                   {...page}
                 ></MiniMenuNavLink>
               ))}
               {userDetails && userDetails.isAdmin ? (
                 <MiniMenuNavLink
-                  key={"adminMiniLinks" + adminPages.url}
+                  key={"adminMiniLinks_isAdmin" + Date.now()}
                   {...adminPages[0]}
                 />
               ) : (
@@ -157,17 +167,20 @@ const MuiNavbar = () => {
                 ? loggedInPages.map((page) =>
                     page.url === ROUTES.LOGOUT ? (
                       <MiniMenuNavLink
-                        key={"miniLinks" + page.url}
+                        key={"miniLinks" + page.url + "loggedIn"}
                         {...page}
                         onClick={handleLogoutClick}
                       />
                     ) : (
-                      <MiniMenuNavLink key={"miniLinks" + page.url} {...page} />
+                      <MiniMenuNavLink
+                        key={"miniLinks" + page.url + "loggedOut"}
+                        {...page}
+                      />
                     )
                   )
                 : notAuthPages.map((page) => (
                     <MiniMenuNavLink
-                      key={"miniLinks" + page.url}
+                      key={"miniLinks" + page.url + "notAuth"}
                       {...page}
                       onClick={handleCloseNavMenu}
                     />

@@ -1,13 +1,19 @@
 import Joi from "joi";
-
+import validUrl from 'valid-url';
 import validation from "./validation";
 
-const imageRegex = /.(jpg|jpeg|png|gif)$/i;
-
+//const imageRegex = /.(jpg|jpeg|png|gif)$/i;
+const validateURL = (value) => {
+  if (validUrl.isWebUri(value)) {
+    return value;
+  } else {
+    return null;
+  }
+};
 const registerSchema = Joi.object({
   firstName: Joi.string().min(2).max(100).required(),
   lastName: Joi.string().min(2).max(100).required(),
-  middleName: Joi.string().min(2).max(100),
+  middleName: Joi.string().min(2).max(100).allow(""),
   phone: Joi.number().required(),
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -15,7 +21,7 @@ const registerSchema = Joi.object({
   password: Joi.string()
     .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+])[a-zA-Z0-9!@#$%^&*()_+]{8,}$"))
     .required(),
-  imageUrl: Joi.string().allow("").uri().regex(imageRegex),
+  imageUrl: Joi.string().custom(validateURL).required(),
   imageAlt: Joi.string().min(0).max(15),
   state: Joi.string().min(0).max(15),
   country: Joi.string().min(2).max(20).required(),

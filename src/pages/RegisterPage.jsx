@@ -8,9 +8,9 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import CachedIcon from "@mui/icons-material/Cached";
 import axios from "axios";
-import validateRegisterSchema from "../../validation/registerValidation";
-import ROUTES from "../../routes/ROUTES";
-import RegisterFieldComponent from "./RegisterFieldComponent";
+import validateRegisterSchema from "../validation/registerValidation";
+import ROUTES from "../routes/ROUTES";
+import RegisterFieldComponent from "../components/RegisterFieldComponent";
 import registerInputs from "./registerInputs";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -59,7 +59,8 @@ const RegisterPage = () => {
       if (joiResponse) {
         return;
       }
-      await axios.post("/users/register");
+      await axios.post("/user/users", inputState);
+
       toast.success("Registeration success!");
       navigate(ROUTES.LOGIN);
     } catch (err) {

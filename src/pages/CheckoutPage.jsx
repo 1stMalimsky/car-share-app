@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CircularProgress, Container, Typography } from "@mui/material";
+import { CircularProgress, Container, Grid, Typography } from "@mui/material";
 import CheckoutCard from "../components/CheckoutCard/CheckoutCard";
 import carCatalog from "../components/CarCard/carCatalog";
-import CarCard from "../components/CarCard/CarCard";
 import { useSelector } from "react-redux";
 
 const CheckoutPage = () => {
@@ -30,26 +29,34 @@ const CheckoutPage = () => {
   if (!inputState) {
     return <CircularProgress />;
   }
+  console.log("chosen dates", chosenDates);
   return (
     <Container>
       <Typography variant="h1">Checkout Page</Typography>
-      <CheckoutCard
-        id={inputState._id}
-        title={inputState.title}
-        description={inputState.description}
-        url={inputState.url}
-        alt={inputState.alt}
-        carType={inputState.carType}
-        carModel={inputState.carModel}
-        city={inputState.city}
-        street={inputState.street}
-        houseNumber={inputState.houseNumber}
-        phone={inputState.phone}
-        price={inputState.price}
-        totalPrice={totalPrice}
-        handleLikeClick={likeClick}
-        handleCheckOutClick={rentBtnClick}
-      />
+      <Grid container sx={{ display: "flex" }}>
+        <Grid item xs={3}>
+          <Typography variant="h5">Add Extras</Typography>
+        </Grid>
+        <Grid item xs={9}>
+          <CheckoutCard
+            id={inputState._id}
+            title={inputState.title}
+            description={inputState.description}
+            url={inputState.url}
+            alt={inputState.alt}
+            carType={inputState.carType}
+            carModel={inputState.carModel}
+            city={inputState.city}
+            street={inputState.street}
+            houseNumber={inputState.houseNumber}
+            phone={inputState.phone}
+            price={inputState.price}
+            totalPrice={totalPrice}
+            handleLikeClick={likeClick}
+            handleCheckOutClick={rentBtnClick}
+          />
+        </Grid>
+      </Grid>
     </Container>
   );
 };

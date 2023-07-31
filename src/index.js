@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import store from "./store/storePie";
 
 /* axios */
-axios.defaults.baseURL = "/api";
+axios.defaults.baseURL = "http://localhost:8181/api";
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {

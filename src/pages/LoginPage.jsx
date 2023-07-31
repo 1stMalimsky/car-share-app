@@ -35,14 +35,20 @@ const LoginPage = () => {
   }, [inputState]);
 
   const handleSignInBtnClick = async (ev) => {
+    /* DELETE AFTER */
+    let i = 1111;
+    /* DELETE AFTER */
     try {
       const joiResponse = validateLoginSchema(inputState);
       setInputsErrorsState(joiResponse);
       if (joiResponse) {
         return;
       }
-      const { data } = await axios.post("/users/login", inputState);
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", i + 1);
+      /* REACTIVATE LATER */
+      /* const { data } = await axios.post("/users/login", inputState);
+      localStorage.setItem("token", data.token); */
+      /* REACTIVATE LATER */
       login();
       navigate(ROUTES.HOME);
     } catch (err) {

@@ -1,15 +1,15 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import DatePicker from "../../components/DatePicker";
+import DatePicker from "../components/DatePicker";
 import { Button } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { dateActions } from "../../store/dateHandler";
+import { dateActions } from "../store/dateHandler";
 import { useEffect, useState } from "react";
-import useDatePicker from "../../hooks/useDatePicker";
+import useDatePicker from "../hooks/useDatePicker";
 import Container from "@mui/material/Container";
-import ROUTES from "../../routes/ROUTES";
+import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 
 const Homepage = () => {
@@ -17,6 +17,8 @@ const Homepage = () => {
     start: "",
     end: "",
   });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ const Homepage = () => {
 
   console.log(chosenDates);
   //console.log("your Choise", yourChoice);
+
   const handleSearchClick = () => {
     const adjustedCurrentDate = currentDate.setHours(0, 0, 0, 0);
     if (
@@ -107,6 +110,7 @@ const Homepage = () => {
             <Link to="/register">Join here!</Link>
           </Typography>
         </Grid>
+        <Grid item xs={12}></Grid>
       </Grid>
     </Container>
   );

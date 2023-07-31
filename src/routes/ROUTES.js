@@ -4,7 +4,10 @@ const ROUTES = {
     LOGIN: "/login",
     INVENTORY: "car-inv",
     ABOUT: "/about",
+    LIKEDCARS: "/likedCars",
+    MYCARS: "/mycars",
     OURCARS: "/ourcars",
+    ADMIN: "/adminpage",
     PROFILE: "/profile",
     LOGOUT: "/logout",
 };
