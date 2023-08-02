@@ -35,9 +35,6 @@ const Homepage = () => {
     }));
   };
 
-  console.log(chosenDates);
-  //console.log("your Choise", yourChoice);
-
   const handleSearchClick = () => {
     const adjustedCurrentDate = currentDate.setHours(0, 0, 0, 0);
     if (

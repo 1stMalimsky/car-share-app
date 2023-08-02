@@ -30,12 +30,6 @@ const MuiNavbar = () => {
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
 
-  /* TEMPORARY */
-  const logInClick = () => {
-    dispatch(authActions.tempLogin());
-  };
-  /* TEMPORARY */
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -46,7 +40,6 @@ const MuiNavbar = () => {
     dispatch(darkThemeActions.changeTheme());
   };
   const handleLogoutClick = () => {
-    localStorage.clear();
     dispatch(authActions.logout());
   };
 
@@ -63,26 +56,32 @@ const MuiNavbar = () => {
           </NavLink>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <NavLinkComponent key={page.label} {...page} />
+              <NavLinkComponent
+                key={page.label}
+                {...page}
+                className="navLink"
+              />
             ))}
             {isLoggedIn ? (
               <NavLinkComponent
                 key={loggedInPages[0].url}
                 {...loggedInPages[0]}
+                className="navLink"
               />
             ) : (
               ""
             )}
             {userDetails && userDetails.isAdmin ? (
-              <NavLinkComponent key={adminPages.url} {...adminPages[0]} />
+              <NavLinkComponent
+                key={adminPages.url}
+                {...adminPages[0]}
+                className="navLink"
+              />
             ) : (
               ""
             )}
           </Box>
           <SearchPartial />
-          <Box>
-            <IconButton onClick={logInClick}>LogIn/logOut</IconButton>
-          </Box>
           <Box>
             <IconButton onClick={changeTheme}>
               {isDarkTheme ? (
@@ -99,17 +98,23 @@ const MuiNavbar = () => {
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            {isLoggedIn ? (
-              <NavLinkComponent
-                key={loggedInPages[1].url}
-                {...loggedInPages[1]}
-                onClick={handleLogoutClick}
-              />
-            ) : (
-              notAuthPages.map((page) => (
-                <NavLinkComponent key={page.url} {...page} />
-              ))
-            )}
+            {isLoggedIn
+              ? loggedInPages.map((page) =>
+                  page.label === "LIKED CARS" ? (
+                    ""
+                  ) : page.label === "LOGOUT" ? (
+                    <NavLinkComponent
+                      key={page.url}
+                      {...page}
+                      onClick={handleLogoutClick}
+                    />
+                  ) : (
+                    <NavLinkComponent key={page.url} {...page} />
+                  )
+                )
+              : notAuthPages.map((page) => (
+                  <NavLinkComponent key={page.url} {...page} />
+                ))}
           </Box>
           {isLoggedIn ? (
             <NavLink to={ROUTES.PROFILE}>

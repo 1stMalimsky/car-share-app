@@ -10,8 +10,9 @@ const useLogin = () => {
       if (!token) {
         return;
       }
-      await axios.get("/users/userInfo");
-      const payload = jwt_decode(token);
+      const payload = await jwt_decode(token);
+      const userId = payload.userId;
+      await axios.get("/user/" + userId);
       dispatch(authActions.login(payload));
     } catch (err) {
       console.log(err.response.data);

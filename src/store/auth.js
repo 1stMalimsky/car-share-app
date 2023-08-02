@@ -29,6 +29,7 @@ const authSlice = createSlice({
         logout(state) {
             state.isLoggedIn = false;
             state.payload = null;
+            localStorage.removeItem('token');
         },
         getId(action) {
             return action.payload._id

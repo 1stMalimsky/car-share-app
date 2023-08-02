@@ -8,6 +8,9 @@ import AboutPage from "../pages/AboutPage";
 import OurCarsPage from "../pages/OurCarsPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import AdminControls from "../pages/AdminControls";
+import MyCars from "../pages/MyCars";
+import LogoutRoute from "../components/LogoutRoute";
+import LogoutLink from "../components/LogoutLink";
 
 const Router = () => {
   return (
@@ -18,8 +21,13 @@ const Router = () => {
       <Route path={ROUTES.INVENTORY} element={<CarInventoryPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.OURCARS} element={<OurCarsPage />} />
+      <Route path={ROUTES.MYCARS} element={<MyCars />} />
       <Route path={"/checkout/:id"} element={<CheckoutPage />} />
       <Route path={ROUTES.ADMIN} element={<AdminControls />} />
+      <Route
+        path={ROUTES.LOGOUT}
+        element={<LogoutRoute element={<LogoutLink />} />}
+      />
     </Routes>
   );
 };
