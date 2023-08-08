@@ -93,11 +93,7 @@ const RegisterPage = () => {
                 isDarkTheme ? "registerHeaderBoxDark" : "registerHeaderBox"
               }
             >
-              <Typography
-                component="h1"
-                variant="h3"
-                className="registerHeader"
-              >
+              <Typography component="h1" variant="h2" className="registerTitle">
                 Register Page
               </Typography>
               <Typography variant="body1" className="registerHeader">

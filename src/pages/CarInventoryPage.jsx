@@ -9,6 +9,7 @@ import useSort from "../hooks/useSort";
 import { useSelector } from "react-redux";
 import DatePicker from "../components/DatePicker";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CarInv = () => {
   /* const [likedCarsArr, setLikedCars] = useState(""); */
@@ -29,7 +30,21 @@ const CarInv = () => {
     }));
   };
 
+  const carSearch = async (chosenDates) => {
+    try {
+      const availableCars = await axios.get(
+        `/${chosenDates.start}/${chosenDates.end}`
+      );
+    } catch (err) {
+      console.log("carSearch err", err);
+    }
+  };
+
   useEffect(() => {
+    carSearch(chosenDates);
+  }, [chosenDates]);
+
+  /* useEffect(() => {
     const filteredCars = cars.filter((car) => {
       return car.bookedDates.some(
         (bookedDate) =>
@@ -43,7 +58,7 @@ const CarInv = () => {
       );
     });
     setCars(filteredCars);
-  }, [chosenDates]);
+  }, [chosenDates]); */
 
   const sortBtnClick = (value) => {
     setSortPick(value);

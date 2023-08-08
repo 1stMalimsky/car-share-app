@@ -6,6 +6,7 @@
 @import "./css/carInv";
 @import "./css/checkoutCard";
 @import "./css/ourCarsPage";
+@import "./css/aboutUs";
 
 * {
   margin: 0;
@@ -17,4 +18,16 @@
 .boxHeader {
   padding: 10px;
   background-color: red;
+}
+
+.pageTitle {
+  font-family: "belanosima" !important;
+  font-size: large;
+  padding: 0 1em 0 1em;
+}
+
+.pageSubtitle {
+  font-family: roboto;
+  font-size: 1.3em !important;
+  padding: 0.5em 1em 0.5em 1em;
 }
