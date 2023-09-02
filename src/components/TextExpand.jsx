@@ -14,10 +14,6 @@ const TextExpand = ({ arr, isDarkMode }) => {
     setOpen(false);
   };
 
-  if (arr.length === 0) {
-    setBtnDisabled(true);
-  }
-
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -30,7 +26,7 @@ const TextExpand = ({ arr, isDarkMode }) => {
       <Button
         variant="contained"
         className="cardBtn"
-        disabled={btnDisabled}
+        disabled={arr.length === 0 ? true : false}
         onClick={handleOpen}
         startIcon={<CalendarTodayIcon />}
       >
@@ -52,8 +48,8 @@ const TextExpand = ({ arr, isDarkMode }) => {
             <Grid item xs={12}>
               <Typography variant="h5">Booked Dates</Typography>
               {arr.map((date) => (
-                <Grid itex={2}>
-                  <Typography variant="body1" key={date.start}>
+                <Grid itex={2} key={date.start}>
+                  <Typography variant="body1">
                     Pickup Date: {formatDate(date.start)}
                     <br />
                     Dropoff Date: {formatDate(date.end)}

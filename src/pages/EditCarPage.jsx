@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Alert from "@mui/material/Alert";
+import {
+  CircularProgress,
+  Avatar,
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Alert,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -14,7 +17,6 @@ import ROUTES from "../routes/ROUTES";
 import validateEditSchema, {
   validateEditCardParamsSchema,
 } from "../validation/editValidation";
-import { CircularProgress } from "@mui/material";
 import atom from "../logo.svg";
 import { toast } from "react-toastify";
 import cardInputs from "../utils/cardInputs";

@@ -26,7 +26,7 @@ const Router = () => {
       <Route path={ROUTES.MYCARS} element={<MyCars />} />
       <Route path={"/edit/:id"} element={<EditCarPage />} />
       <Route path={"/checkout/:id"} element={<CheckoutPage />} />
-      <Route path={"/myprofile"} element={<ProfilePage />} />
+      <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
       <Route path={ROUTES.ADMIN} element={<AdminControls />} />
       <Route
         path={ROUTES.LOGOUT}
