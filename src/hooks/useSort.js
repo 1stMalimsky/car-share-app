@@ -13,7 +13,7 @@ const useSort = (state, setState, arr, func) => {
                 break;
             case "Location":
                 console.log("Location picked");
-                setState([...arr].sort((a, b) => a.city.localeCompare(b.city))
+                setState([...arr].sort((a, b) => a.address.city.localeCompare(b.address.city))
                 );
                 break;
             case "Price":

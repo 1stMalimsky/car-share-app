@@ -2,7 +2,6 @@ import Joi from "joi";
 import validUrl from 'valid-url';
 import validation from "./validation";
 
-//const imageRegex = /.(jpg|jpeg|png|gif)$/i;
 const validateURL = (value) => {
   if (validUrl.isWebUri(value)) {
     return value;
@@ -23,14 +22,14 @@ const registerSchema = Joi.object({
   password: Joi.string()
     .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+])[a-zA-Z0-9!@#$%^&*()_+]{8,}$"))
     .required(),
-  imageUrl: Joi.string().custom(validateURL).allow(""),
-  imageAlt: Joi.string().min(0).max(15),
+  imageUrl: Joi.string().custom(validateURL).required(),
+  imageAlt: Joi.string().min(0).max(15).required(),
   state: Joi.string().min(0).max(15),
   country: Joi.string().min(2).max(20).required(),
   city: Joi.string().min(2).max(30).required(),
   street: Joi.string().min(2).max(30).required(),
   houseNumber: Joi.number().required(),
-  zipCode: Joi.number().min(5).required(),
+  zip: Joi.number().min(5).required(),
 });
 
 const validateRegisterSchema = (userInput) =>

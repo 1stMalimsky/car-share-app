@@ -7,9 +7,14 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const SortComponent = ({ onSortClick }) => {
   const [value, setValue] = useState("None");
+
+  const isDarkTheme = useSelector(
+    (storePie) => storePie.darkThemeSlice.isDarkTheme
+  );
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -22,7 +27,11 @@ const SortComponent = ({ onSortClick }) => {
   return (
     <FormControl>
       <FormLabel id="sortGroup">
-        <Typography variant="body1" color="black" sx={{ fontSize: "1.5em" }}>
+        <Typography
+          variant="body1"
+          color={isDarkTheme ? "white" : "black"}
+          sx={{ fontSize: "1.5em" }}
+        >
           Sort By
         </Typography>
       </FormLabel>

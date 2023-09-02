@@ -148,12 +148,16 @@
 .imgURL {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: fit;
+     object-fit: fit;
 }
 
 .cardBtn {
   margin-right: 0.8em !important;
+}
+
+.imgXpand {
+  max-width: 100%;
 }
 
 .sideGridItem {
@@ -228,29 +232,41 @@
   align-items: center;
 }
 
-.headerBox {
-  width: 100%;
-  height: 25em;
-  background-image: url("../public/imgs/registerHeader.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.headerBox .ourCarsHeaderBox {
-  background-color: rgba(255, 255, 255, 0.6);
-  max-width: 30em;
-  display: block;
-}
-.headerBox .registerHeaderBoxDark {
+.modalHeaderBoxDark {
   background-color: rgba(0, 0, 0, 0.6);
   max-width: 30em;
   display: block;
 }
-.headerBox .ourCarsHeader {
+
+.modalHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 30em;
+  display: block;
+}
+
+.ourCarsHeaderBigBox {
+  width: 100%;
+  height: 20em;
+  background-image: url("../public/imgs/ourCars.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.ourCarsHeaderBigBox .HeaderBoxDark {
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.ourCarsHeaderBigBox .ourCarsHeaderBox {
+  background-color: rgba(255, 255, 255, 0.6);
+  max-width: 30em;
+  display: block;
+}
+.ourCarsHeaderBigBox .ourCarsHeader {
   padding: 0.1em 0.5em 0.1em 0.5em;
   margin: 0 0.8em 0 0;
 }
-.headerBox .ourCarsHeader.MuiTypography-body1 {
+.ourCarsHeaderBigBox .ourCarsHeader.MuiTypography-body1 {
   font-size: 1.5em;
 }
 

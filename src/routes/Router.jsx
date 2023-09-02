@@ -11,6 +11,8 @@ import AdminControls from "../pages/AdminControls";
 import MyCars from "../pages/MyCars";
 import LogoutRoute from "../components/LogoutRoute";
 import LogoutLink from "../components/LogoutLink";
+import EditCarPage from "../pages/EditCarPage";
+import ProfilePage from "../pages/ProfilePage";
 
 const Router = () => {
   return (
@@ -22,7 +24,9 @@ const Router = () => {
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.OURCARS} element={<OurCarsPage />} />
       <Route path={ROUTES.MYCARS} element={<MyCars />} />
+      <Route path={"/edit/:id"} element={<EditCarPage />} />
       <Route path={"/checkout/:id"} element={<CheckoutPage />} />
+      <Route path={"/myprofile"} element={<ProfilePage />} />
       <Route path={ROUTES.ADMIN} element={<AdminControls />} />
       <Route
         path={ROUTES.LOGOUT}
