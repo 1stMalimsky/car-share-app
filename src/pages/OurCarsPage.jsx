@@ -4,7 +4,6 @@ import {
   Box,
   Grid,
   CircularProgress,
-  Button,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -17,12 +16,13 @@ import { toast } from "react-toastify";
 const OurCarsPage = () => {
   const [sortPick, setSortPick] = useState("");
   const [cars, setCars] = useState([]);
+  const [currentUser, setCurrentUser] = useState("");
   const [likedCars, setLikedCars] = useState([]);
 
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
-  const payload = useSelector((storePie) => storePie.authSlice);
+  const thisUser = useSelector((storePie) => storePie.authSlice);
 
   useEffect(() => {
     axios
@@ -35,6 +35,19 @@ const OurCarsPage = () => {
         toast.error("Oops! Couldn't load your cards. Please try again");
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("/user/" + thisUser.payload.userId)
+      .then(({ data }) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => {
+        console.log("err from axios", err);
+        toast.error("Oops! Couldn't load your cards. Please try again");
+      });
+  }, []);
+
   const sortBtnClick = (value) => {
     setSortPick(value);
   };
@@ -47,7 +60,6 @@ const OurCarsPage = () => {
   const likeClick = async (id) => {
     try {
       await axios.patch(`/cars/like/${id}`);
-      console.log(`car ${id} sent`);
     } catch (err) {
       console.log("like update error", err);
     }
@@ -95,6 +107,7 @@ const OurCarsPage = () => {
               >
                 <CarCardComponent
                   id={car._id}
+                  user_id={car.user_id}
                   title={car.title}
                   description={car.description}
                   url={car.image.url}
@@ -106,17 +119,12 @@ const OurCarsPage = () => {
                   houseNumber={car.address.houseNumber}
                   phone={car.phone}
                   price={car.price}
-                  loggedIn={payload.isLoggedIn}
+                  loggedIn={thisUser.isLoggedIn}
                   handleCheckOutClick={rentBtnClick}
                   handleLikeClick={likeClick}
-                  /* isLiked={
-                likedCarsArr.find(
-                  (card) =>
-                    card.carId == car.id && car.userIds.includes(userId)
-                )
-                  ? true
-                  : false
-              } */
+                  isLiked={
+                    car.likes.includes(thisUser.payload.userId) ? true : false
+                  }
                 />
               </Grid>
             ))}

@@ -6,12 +6,14 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Avatar } from "@mui/material";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ImgXpand from "../ImgExpand";
+import AboutOwnerExpand from "../AboutOwnerExpand";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 const CarCardComponent = ({
   id,
+  user_id,
   title,
   description,
   url,
@@ -24,18 +26,41 @@ const CarCardComponent = ({
   phone,
   price,
   loggedIn,
+  isLiked,
   handleLikeClick,
   handleCheckOutClick,
 }) => {
-  const [likeStatus, setLikeStatus] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(isLiked);
+  const [ownerProfile, setOwnerData] = useState(null);
+
   const likeClicked = () => {
     setLikeStatus((prevLikeStatus) => !prevLikeStatus);
     handleLikeClick(id);
   };
 
+  const ownerData = async (id) => {
+    try {
+      const { data } = await axios.get("/user/" + user_id);
+      delete data.password;
+      delete data.address;
+      delete data.__v;
+      setOwnerData(data);
+    } catch (err) {
+      console.log("owner Data err", err);
+    }
+  };
+
+  useEffect(() => {
+    ownerData(id);
+  }, []);
+
   const handleCheckOut = () => {
     handleCheckOutClick(id);
   };
+
+  if (!ownerProfile) {
+    return <CircularProgress />;
+  }
 
   return (
     <Grid container className="cardGridContainer">
@@ -92,19 +117,14 @@ const CarCardComponent = ({
           onClick={likeClicked}
           sx={{ display: loggedIn ? "block" : "none" }}
         >
-          {!likeStatus ? (
-            <FavoriteBorderIcon fontSize="large" />
-          ) : (
+          {likeStatus ? (
             <FavoriteIcon fontSize="large" />
+          ) : (
+            <FavoriteBorderIcon fontSize="large" />
           )}
         </IconButton>
         <div className="profileAv">
-          <Typography variant="h6">About the owner</Typography>
-          <IconButton>
-            <Avatar>
-              <AccountBoxIcon />
-            </Avatar>
-          </IconButton>
+          <AboutOwnerExpand ownerProfile={ownerProfile} />
         </div>
       </Grid>
     </Grid>

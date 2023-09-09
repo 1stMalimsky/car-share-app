@@ -4,15 +4,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import { Avatar } from "@mui/material";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ImgXpand from "../ImgExpand";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import BookedDatesExpand from "../BookedDatesExpand";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
-const MyCarCardComponent = ({
-  id,
+const AboutUsCarCardComponent = ({
   title,
   description,
   url,
@@ -24,24 +21,21 @@ const MyCarCardComponent = ({
   houseNumber,
   phone,
   price,
-  bookedDates,
-  isDarkMode,
-  editClick,
-  deleteClick,
 }) => {
-  const handleEditBtn = () => {
-    editClick(id);
+  const [likeStatus, setLikeStatus] = useState(false);
+  const likeClicked = () => {
+    setLikeStatus((prevLikeStatus) => !prevLikeStatus);
   };
 
-  const handleDeleteBtn = () => {
-    deleteClick(id);
-  };
+  const handleCheckOut = () => {};
+
+  const aboutClick = () => {};
 
   return (
     <Grid container className="cardGridContainer">
       {/* img item */}
       <Grid item xs={5} className="carCardImgItem">
-        <ImgXpand url={url} alt={alt} className="imgUrl" />
+        <ImgXpand url={url} alt={alt} className="imgURL" />
       </Grid>
 
       <Grid item xs={7}>
@@ -84,23 +78,30 @@ const MyCarCardComponent = ({
         <Button
           variant="contained"
           className="cardBtn"
-          onClick={handleEditBtn}
-          startIcon={<EditIcon />}
+          onClick={handleCheckOut}
         >
-          <Typography>Edit</Typography>
+          Rent
         </Button>
-        <Button
-          variant="contained"
-          className="cardBtn"
-          onClick={handleDeleteBtn}
-          startIcon={<DeleteIcon />}
-        >
-          Delete
-        </Button>
-        <BookedDatesExpand arr={bookedDates} isDarkMode={isDarkMode} />
+        <IconButton onClick={likeClicked}>
+          {!likeStatus ? (
+            <FavoriteBorderIcon fontSize="large" />
+          ) : (
+            <FavoriteIcon fontSize="large" />
+          )}
+        </IconButton>
+        <div className="profileAv">
+          <Button
+            variant="contained"
+            className="cardBtn"
+            onClick={aboutClick}
+            startIcon={<AccountBoxIcon />}
+          >
+            About The Owner
+          </Button>
+        </div>
       </Grid>
     </Grid>
   );
 };
 
-export default MyCarCardComponent;
+export default AboutUsCarCardComponent;

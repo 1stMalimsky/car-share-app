@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import {
+  Avatar,
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Container,
+  Typography,
+} from "@mui/material";
 import Alert from "@mui/material/Alert";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
-import validateEditSchema, {
-  validateEditCardParamsSchema,
-} from "../validation/editValidation";
+import validateProfileSchema from "../validation/profileValidation";
 import { CircularProgress } from "@mui/material";
 import atom from "../logo.svg";
 import { toast } from "react-toastify";
 import userInputs from "../utils/userInput";
 import EditCardInput from "../components/EditCardInputs";
 import { useSelector } from "react-redux";
+import normalizeUser from "../utils/normalizeUser";
 
 const EditCardPage = () => {
   const [inputState, setInputState] = useState("");
@@ -30,11 +31,11 @@ const EditCardPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        console.log("payload id", payload);
         const { data } = await axios.get("/user/" + payload.userId);
         let newInputState = {
           ...data,
         };
+        console.log("input data", newInputState);
         if (data.image && data.image.url) {
           newInputState.url = data.image.url;
         } else {
@@ -52,15 +53,20 @@ const EditCardPage = () => {
           newInputState.houseNumber = data.address.houseNumber;
           newInputState.zip = data.address.zip;
         }
-
+        if (data.name) {
+          newInputState.firstName = data.name.firstName;
+          newInputState.middleName = data.name.middleName;
+          newInputState.lastName = data.name.lastName;
+        }
+        delete newInputState.name;
         delete newInputState.image;
         delete newInputState.address;
-        //delete newInputState.bookedDates;
-        delete newInputState.likes;
-        delete newInputState.userId;
-        delete newInputState.useruserId;
+        delete newInputState._id;
         delete newInputState.createdAt;
         delete newInputState.__v;
+        delete newInputState.password;
+        delete newInputState.isAdmin;
+
         setInputState(newInputState);
       } catch (err) {
         console.log(err);
@@ -70,14 +76,16 @@ const EditCardPage = () => {
 
   const handleSaveBtnClick = async (ev) => {
     try {
-      const { bookedDates, ...updatedInputState } = inputState;
-      const joiResponse = validateEditSchema(updatedInputState);
+      const updatedInputState = { ...inputState };
+      const joiResponse = validateProfileSchema(updatedInputState);
       console.log("joi Response", joiResponse);
       setInputsErrorsState(joiResponse);
       if (!joiResponse) {
-        await axios.put("/cars/" + payload._id, updatedInputState);
-        toast.success("Car Updated");
-        navigate(ROUTES.MYCARS);
+        normalizeUser(updatedInputState);
+        console.log("updated input", updatedInputState);
+        await axios.put("/user/" + payload.userId, updatedInputState);
+        toast.success("User Updated");
+        navigate(ROUTES.HOME);
       }
     } catch (err) {
       console.log(err);
@@ -86,7 +94,7 @@ const EditCardPage = () => {
   };
 
   const handleCancelBtnClick = () => {
-    navigate(ROUTES.MYCARS);
+    navigate("/");
   };
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
@@ -97,8 +105,6 @@ const EditCardPage = () => {
   if (!inputState) {
     return <CircularProgress />;
   }
-
-  console.log("inputState", inputState);
 
   return (
     <Container component="main" maxWidth="md">
@@ -136,27 +142,15 @@ const EditCardPage = () => {
                 sm={6}
                 key={item.inputName + "EditProfilePage"}
               >
-                {item.stateName ===
-                ("fisrtName" || "middleName" || "lastName") ? (
-                  <TextField
-                    label={item.inputName}
-                    required={true}
-                    value={inputState[item.name.stateName]}
-                    id={inputState[item.name.stateName]}
-                    onChange={handleInputChange}
-                    multiline
-                    fullWidth
-                  />
-                ) : (
-                  <EditCardInput
-                    input={item.stateName}
-                    label={item.inputName}
-                    required={true}
-                    value={inputState[item.stateName]}
-                    id={item.stateName}
-                    onChange={handleInputChange}
-                  />
-                )}
+                <EditCardInput
+                  input={item.stateName}
+                  label={item.inputName}
+                  required={true}
+                  value={inputState[item.stateName]}
+                  id={item.stateName}
+                  onChange={handleInputChange}
+                />
+
                 {inputsErrorsState && inputsErrorsState[item.stateName] && (
                   <Alert severity="warning">
                     {inputsErrorsState[item.stateName].map((err) => (

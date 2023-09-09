@@ -1,15 +1,12 @@
 import { Container, Typography, Grid, Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import CarCard from "../components/CarCard/CarCard";
+import AboutUsCarCard from "../components/CarCard/AboutUsCarCard";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const AboutPage = () => {
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
-  const likeClick = () => {};
-
-  const rentBtnClick = () => {};
 
   return (
     <Container component="main" maxWidth="lg">
@@ -88,7 +85,7 @@ const AboutPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} md={5}>
-            <CarCard
+            <AboutUsCarCard
               id="1"
               title="Example Car Card"
               description="This is where you would put a short description of your car"
@@ -101,8 +98,6 @@ const AboutPage = () => {
               houseNumber="15"
               phone="0500000000"
               price="250"
-              handleLikeClick={likeClick}
-              handleCheckOutClick={rentBtnClick}
             />
           </Grid>
         </Grid>

@@ -38,7 +38,6 @@ const OurCarsPage = () => {
   };
 
   const handleDeleteBtn = async (id) => {
-    console.log("delete clicked", id);
     try {
       await axios.delete(`/cars/${id}`);
       toast.success("Car Deleted!");
@@ -64,12 +63,11 @@ const OurCarsPage = () => {
               className={isDarkTheme ? "HeaderBoxDark" : "ourCarsHeaderBox"}
             >
               <Typography component="h1" variant="h2" className="pageTitle">
-                Our Cars
+                My Cars
               </Typography>
               <Typography variant="body1" className="pageSubtitle">
-                Interested in browsing our cars? Take a look at our fleet of
-                individually owned cars. You can use the side bar to sort the
-                cars. Happy huntin'.
+                Welcome to your garage! Here you will find all the cars you have
+                chosen to rent out. Feel free to add, remove or edit your cars.
               </Typography>
             </Grid>
           </Grid>

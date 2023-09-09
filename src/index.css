@@ -149,7 +149,11 @@
   width: 100%;
   height: 100%;
   -o-object-fit: fit;
-     object-fit: fit;
+  object-fit: fit;
+}
+
+.smallImg {
+  width: 40%;
 }
 
 .cardBtn {
@@ -203,7 +207,7 @@
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .checkoutCardBtn {
@@ -327,4 +331,4 @@
   font-family: roboto;
   font-size: 1.3em !important;
   padding: 0.5em 1em 0.5em 1em;
-}/*# sourceMappingURL=index.css.map */
+} /*# sourceMappingURL=index.css.map */

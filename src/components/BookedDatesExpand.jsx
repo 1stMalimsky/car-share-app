@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button, Typography, Box, Grid, Divider } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
-const TextExpand = ({ arr, isDarkMode }) => {
+const BookedDatesExpand = ({ arr, isDarkMode }) => {
   const [open, setOpen] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
 
@@ -68,4 +68,4 @@ const TextExpand = ({ arr, isDarkMode }) => {
   );
 };
 
-export default TextExpand;
+export default BookedDatesExpand;
