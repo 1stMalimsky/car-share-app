@@ -17,13 +17,8 @@
   padding: 0.6em;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  .checkoutProfileAv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  .checkoutCardBtn {
+    margin-right: 0.3em !important;
   }
 }
 
@@ -33,15 +28,11 @@
   object-fit: cover;
 }
 
-.checkoutCardBtn {
-  margin-right: 0.8em !important;
-}
-
 .checkoutPrice {
   display: flex;
   text-align: center;
   justify-content: center;
-  padding-top: 1em;
+  padding: 0.5em;
   background-color: rgba(4, 4, 4, 0.1);
   box-shadow: -2px -2px 3px 2px rgba(4, 4, 4, 0.1);
   margin-left: auto;

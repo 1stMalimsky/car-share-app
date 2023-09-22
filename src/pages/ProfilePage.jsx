@@ -22,7 +22,7 @@ import EditCardInput from "../components/EditCardInputs";
 import { useSelector } from "react-redux";
 import normalizeUser from "../utils/normalizeUser";
 
-const EditCardPage = () => {
+const EditProfilePage = () => {
   const [inputState, setInputState] = useState("");
   const [inputsErrorsState, setInputsErrorsState] = useState("");
   const navigate = useNavigate();
@@ -127,7 +127,6 @@ const EditCardPage = () => {
           sx={{
             height: 233,
             width: 350,
-            maxHeight: { xs: 233, md: 167 },
             maxWidth: { xs: 350, md: 250 },
           }}
           alt={inputState.alt ? inputState.alt : ""}
@@ -186,4 +185,4 @@ const EditCardPage = () => {
     </Container>
   );
 };
-export default EditCardPage;
+export default EditProfilePage;

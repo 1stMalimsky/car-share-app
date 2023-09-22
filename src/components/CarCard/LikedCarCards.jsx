@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -5,11 +6,12 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { CircularProgress } from "@mui/material";
+import ImgXpand from "../ImgExpand";
 import AboutOwnerExpand from "../AboutOwnerExpand";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
-const CheckoutCard = ({
+const LikedCarCardsComponent = ({
   id,
   user_id,
   title,
@@ -23,47 +25,49 @@ const CheckoutCard = ({
   houseNumber,
   phone,
   price,
-  totalPrice,
+  loggedIn,
+  isLiked,
   handleLikeClick,
-  handleCheckOutClick,
 }) => {
-  const [likeStatus, setLikeStatus] = useState(false);
-  const [ownerProfile, setOwnerProfile] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get(`/user/${user_id}`)
-      .then(({ data }) => {
-        setOwnerProfile(data);
-      })
-      .catch((err) => {
-        console.log("error from axios", err);
-      });
-  }, []);
+  const [likeStatus, setLikeStatus] = useState(isLiked);
+  const [ownerProfile, setOwnerData] = useState(null);
 
   const likeClicked = () => {
-    handleLikeClick();
-    setLikeStatus(!likeStatus);
+    setLikeStatus((prevLikeStatus) => !prevLikeStatus);
+    handleLikeClick(id);
   };
 
-  const handleCheckOut = () => {
-    handleCheckOutClick(id);
+  const ownerData = async (id) => {
+    try {
+      const { data } = await axios.get("/user/" + user_id);
+      delete data.password;
+      delete data.address;
+      delete data.__v;
+      setOwnerData(data);
+    } catch (err) {
+      console.log("owner Data err", err);
+    }
   };
+
+  useEffect(() => {
+    ownerData(id);
+  }, []);
 
   if (!ownerProfile) {
     return <CircularProgress />;
   }
 
   return (
-    <Grid container className="checkoutCardGridContainer">
+    <Grid container className="cardGridContainer">
       {/* img item */}
-      <Grid item xs={5} className="checkoutCarCardImgItem">
-        <img src={url} alt={alt} className="checkoutImgURL" />
+      <Grid item xs={5} className="carCardImgItem">
+        <ImgXpand url={url} alt={alt} className="imgURL" />
       </Grid>
+
       <Grid item xs={7}>
         <Grid container sx={{ display: "flex", flexDirection: "row" }}>
           {/* title and description */}
-          <Grid item xs={12} className="checkoutCarCardItem">
+          <Grid item xs={12} className="carCardItem">
             <Typography gutterBottom variant="h5" component="div">
               {title}
             </Typography>
@@ -78,7 +82,7 @@ const CheckoutCard = ({
               <br />
               Phone: {phone}
               <br />
-              Price (per day): {price} ILS
+              Price (per day): ₪{price}
             </Typography>
           </Grid>
           {/* location details */}
@@ -96,36 +100,23 @@ const CheckoutCard = ({
         </Grid>
       </Grid>
       {/* buttons */}
-      <Grid item xs={6} className="checkoutCarCardBtnSection">
-        <Button
-          variant="contained"
-          className="checkoutCardBtn"
-          onClick={handleCheckOut}
+      <Grid item xs={12} className="carCardBtnSection">
+        <IconButton
+          onClick={likeClicked}
+          sx={{ display: loggedIn ? "block" : "none" }}
         >
-          Rent
-        </Button>
-        <IconButton onClick={likeClicked} className="checkoutCardBtn">
-          {!likeStatus ? (
-            <FavoriteBorderIcon fontSize="large" />
-          ) : (
+          {likeStatus ? (
             <FavoriteIcon fontSize="large" />
+          ) : (
+            <FavoriteBorderIcon fontSize="large" />
           )}
         </IconButton>
-        <AboutOwnerExpand
-          ownerProfile={ownerProfile}
-          className="checkoutCardBtn"
-        />
-      </Grid>
-      <Grid item xs={3}></Grid>
-      <Grid item xs={3} className="checkoutPrice">
-        <Typography variant="h6">
-          Your Total price is:
-          <br />
-          {totalPrice} ILS
-        </Typography>
+        <div className="profileAv">
+          <AboutOwnerExpand ownerProfile={ownerProfile} />
+        </div>
       </Grid>
     </Grid>
   );
 };
 
-export default CheckoutCard;
+export default LikedCarCardsComponent;

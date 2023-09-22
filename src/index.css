@@ -40,8 +40,8 @@
 .homepageSignUpLink {
   display: inline-block;
   padding: 0 0.4em 0 0.4em;
-  background-color: rgba(255, 255, 255, 0.811);
-  box-shadow: -2px -2px 5px 6px rgba(255, 255, 255, 0.811);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: -2px -2px 5px 6px rgba(255, 255, 255, 0.2);
 }
 
 .navBar {
@@ -149,11 +149,7 @@
   width: 100%;
   height: 100%;
   -o-object-fit: fit;
-  object-fit: fit;
-}
-
-.smallImg {
-  width: 40%;
+     object-fit: fit;
 }
 
 .cardBtn {
@@ -162,10 +158,6 @@
 
 .imgXpand {
   max-width: 100%;
-}
-
-.sideGridItem {
-  margin-left: 0.5em;
 }
 
 .cardGridItem {
@@ -194,31 +186,23 @@
   padding: 0.6em;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
-.checkoutCarCardBtnSection .checkoutProfileAv {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.checkoutCarCardBtnSection .checkoutCardBtn {
+  margin-right: 0.3em !important;
 }
 
 .checkoutImgURL {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.checkoutCardBtn {
-  margin-right: 0.8em !important;
+     object-fit: cover;
 }
 
 .checkoutPrice {
   display: flex;
   text-align: center;
   justify-content: center;
-  padding-top: 1em;
+  padding: 0.5em;
   background-color: rgba(4, 4, 4, 0.1);
   box-shadow: -2px -2px 3px 2px rgba(4, 4, 4, 0.1);
   margin-left: auto;
@@ -309,11 +293,25 @@
   text-decoration: underline;
 }
 
+.extraComp {
+  display: flex;
+  margin: 0.2em 0 0.5em 0;
+  align-items: center;
+}
+.extraComp .btn {
+  margin-right: 0.5em;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: roboto, sans-serif;
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
 }
 
 .boxHeader {
@@ -331,4 +329,26 @@
   font-family: roboto;
   font-size: 1.3em !important;
   padding: 0.5em 1em 0.5em 1em;
-} /*# sourceMappingURL=index.css.map */
+}
+
+.smallImg {
+  width: 30%;
+}
+
+.modalBox {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(255, 255, 255, 0.693);
+}
+
+.modalBoxDark {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(0, 0, 0, 0.615);
+}/*# sourceMappingURL=index.css.map */

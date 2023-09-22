@@ -16,13 +16,13 @@ import { toast } from "react-toastify";
 const OurCarsPage = () => {
   const [sortPick, setSortPick] = useState("");
   const [cars, setCars] = useState([]);
-  const [currentUser, setCurrentUser] = useState("");
+  //const [currentUser, setCurrentUser] = useState("");
   const [likedCars, setLikedCars] = useState([]);
 
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
-  const thisUser = useSelector((storePie) => storePie.authSlice);
+  const thisUser = useSelector((storePie) => storePie.authSlice) || null;
 
   useEffect(() => {
     axios
@@ -36,17 +36,20 @@ const OurCarsPage = () => {
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get("/user/" + thisUser.payload.userId)
-      .then(({ data }) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log("err from axios", err);
-        toast.error("Oops! Couldn't load your cards. Please try again");
-      });
-  }, []);
+  /* useEffect(() => {
+      axios
+        .get("/user/" + thisUser.payload.userId)
+        .then(({ data }) => {
+          if (!data) {
+            return;
+          }
+          setCurrentUser(data);
+        })
+        .catch((err) => {
+          console.log("err from axios", err);
+          toast.error("Oops! Couldn't load your cards. Please try again");
+        });
+  }, []); */
 
   const sortBtnClick = (value) => {
     setSortPick(value);
@@ -119,11 +122,15 @@ const OurCarsPage = () => {
                   houseNumber={car.address.houseNumber}
                   phone={car.phone}
                   price={car.price}
-                  loggedIn={thisUser.isLoggedIn}
+                  loggedIn={thisUser.isLoggedIn || false}
                   handleCheckOutClick={rentBtnClick}
                   handleLikeClick={likeClick}
                   isLiked={
-                    car.likes.includes(thisUser.payload.userId) ? true : false
+                    thisUser.payload !== null
+                      ? car.likes.includes(thisUser.payload.userId)
+                        ? true
+                        : false
+                      : false
                   }
                 />
               </Grid>

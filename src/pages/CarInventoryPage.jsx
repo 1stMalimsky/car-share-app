@@ -1,131 +1,124 @@
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import SortComponent from "../components/SortComponent";
-import { Box, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CarCardComponent from "../components/CarCard/CarCard";
-import carCatalog from "../components/CarCard/carCatalog";
 import useSort from "../hooks/useSort";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "../components/DatePicker";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { dateActions } from "../store/dateHandler";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ROUTES from "../routes/ROUTES";
+import moment from "moment/moment";
 
 const CarInv = () => {
-  /* const [likedCarsArr, setLikedCars] = useState(""); */
+  const params = useParams();
   const [sortPick, setSortPick] = useState("");
   const [cars, setCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
-  const [sideBarDates, setSideBarDates] = useState("");
-  let chosenDates = useSelector((storePie) => storePie.dateSlice) || {};
-
+  const [chosenDates, setChosenDates] = useState({
+    startDate: +params.start,
+    endDate: +params.end,
+  });
+  const [noCars, setNoCars] = useState(false);
   const navigate = useNavigate();
+  const currentDate = new Date();
+  const thisUser = useSelector((storePie) => storePie.authSlice);
+
+  const carSearch = async () => {
+    try {
+      const filteredCars = await axios.get(
+        `/cars/${params.start}/${params.end}`
+      );
+      setFilteredCars(filteredCars.data);
+      setNoCars(filteredCars.data.length === 0);
+    } catch (err) {
+      console.log("carSearch err", err);
+    }
+  };
+  const calculateDays = (dates) => {
+    const date1 = moment(Number(dates.start));
+    const date2 = moment(Number(dates.end));
+    return date2.diff(date1, "days");
+  };
+
+  useEffect(() => {
+    carSearch(params);
+  }, [params]);
+
+  useEffect(() => {
+    let timeoutId;
+    if (filteredCars.length === 0) {
+      setNoCars(true);
+
+      timeoutId = setTimeout(() => {
+        setNoCars(false);
+        initiateToastAndNavigate();
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [filteredCars]);
+
+  const initiateToastAndNavigate = () => {
+    toast.error("no cars found");
+    navigate(ROUTES.HOME);
+  };
 
   const handleDateChange = (dateText, newDate) => {
     if (newDate == null) {
       return;
     }
-    setSideBarDates((prevDates) => ({
+    setChosenDates((prevDates) => ({
       ...prevDates,
-      [dateText.toLowerCase()]: newDate.$d.getTime(),
+      [dateText]: newDate.$d.getTime(),
     }));
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get("/cars/");
-        console.log("cars", data.allCars);
-        setCars(data.allCars);
-      } catch (err) {
-        console.log("err from axios", err);
-        toast.error("Oops! Couldn't load your cars. Please try again");
-      }
-    };
-
-    fetchData();
+    console.log("chosenDates", chosenDates);
   }, [chosenDates]);
 
-  useEffect(() => {
-    console.log("chosen dates", chosenDates);
-
-    /* const filteredCars = cars.filter((car) => {
-      return car.bookedDates.some(
-        (bookedDate) =>
-          bookedDate !== null ||
-          (chosenDates.startDate <= bookedDate.start &&
-            chosenDates.endDate >= bookedDate.end) ||
-          (chosenDates.startDate >= bookedDate.start &&
-            chosenDates.endDate <= bookedDate.end) ||
-          (chosenDates.startDate >= bookedDate.start &&
-            chosenDates.endDate <= bookedDate.start &&
-            chosenDates.endDate >= bookedDate.end) ||
-          (chosenDates.startDate <= bookedDate.start &&
-            chosenDates.endDate <= bookedDate.end &&
-            chosenDates.startDate >= bookedDate.end) ||
-          (chosenDates.startDate == bookedDate.start &&
-            chosenDates.endDate == bookedDate.end)
-      );
-    }); */
-    const filteredCars = cars.filter((car) => {
-      return car.bookedDates.some(
-        (bookedDate) =>
-          bookedDate !== null ||
-          // Conditions for overlap
-          (chosenDates.startDate <= bookedDate.start &&
-            chosenDates.startDate >= bookedDate.end) ||
-          (chosenDates.endDate <= bookedDate.start &&
-            chosenDates.endDate >= bookedDate.end) ||
-          (chosenDates.startDate >= bookedDate.start &&
-            chosenDates.endDate <= bookedDate.end) ||
-          (chosenDates.startDate == bookedDate.start &&
-            chosenDates.endDate == bookedDate.end)
-      );
-    });
-
-    setFilteredCars(filteredCars);
-    console.log("filtered cars", filteredCars);
-  }, [chosenDates, cars]);
+  const handleSearchClick = () => {
+    const adjustedCurrentDate = currentDate.setHours(0, 0, 0, 0);
+    if (
+      isNaN(chosenDates.startDate) ||
+      isNaN(chosenDates.endDate) ||
+      chosenDates.startDate < adjustedCurrentDate ||
+      chosenDates.endDate < adjustedCurrentDate ||
+      chosenDates.startDate >= chosenDates.endDate
+    ) {
+      return toast.error("Please enter valid dates!");
+    }
+    navigate(`/car-inv/${chosenDates.startDate}/${chosenDates.endDate}`);
+  };
 
   const sortBtnClick = (value) => {
     setSortPick(value);
   };
-  useSort(sortPick, setCars, cars, sortBtnClick);
+  useSort(sortPick, setFilteredCars, filteredCars, sortBtnClick);
 
-  const likeClick = () => {};
-
-  const rentBtnClick = (id) => {
-    navigate(`/checkout/${id}`);
+  const likeClick = async (id) => {
+    try {
+      await axios.patch(`/cars/like/${id}/`);
+    } catch (err) {
+      console.log("like update error", err);
+    }
   };
 
-  if (cars.length === 0 || !chosenDates) {
-    return <CircularProgress />;
-  }
-
-  /*  const carSearch = async (dates) => {
-    console.log("Chosen dates", dates);
-    try {
-      console.log("chosenDates inside", dates.startDate, dates.endDate);
-      const { data } = await axios.get(
-        `/cars/${dates.startDate}/${dates.endDate}`
-      );
-      console.log("available cars", data);
-      setCars(data);
-    } catch (err) {
-      console.log("carSearch err", err);
-    }
-  }; 
-  useEffect(() => {
-    if (!chosenDates) {
-      return;
-    }
-    carSearch(chosenDates);
-  }, [chosenDates]); */
+  const rentBtnClick = (id) => {
+    const numOfDays = calculateDays(params);
+    navigate(`/checkout/${id}/${params.start}/${params.end}/${numOfDays}`);
+  };
 
   return (
     <Box>
-      <Grid container sx={{ display: "flex" }}>
+      <div>{noCars && <CircularProgress />}</div>
+      <Grid container sx={{ display: noCars ? "none" : "flex" }}>
         {/* HEADER */}
         <Grid item xs={12} className="headerGridItem"></Grid>
         {/* SIDE MENU */}
@@ -133,14 +126,17 @@ const CarInv = () => {
           <SortComponent onSortClick={sortBtnClick} />
           <DatePicker
             dateText="Pickup Date"
-            onChange={handleDateChange}
-            value={sideBarDates.start}
+            onChange={(newDate) => handleDateChange("startDate", newDate)}
+            value={params.start}
           />
           <DatePicker
             dateText="Return Date"
-            onChange={handleDateChange}
-            value={sideBarDates.end}
+            onChange={(newDate) => handleDateChange("endDate", newDate)}
+            value={params.end}
           />
+          <Button variant="contained" onClick={handleSearchClick}>
+            Search
+          </Button>
         </Grid>
         {/* CAR CARD */}
         {filteredCars.map((car) => (
@@ -152,26 +148,27 @@ const CarInv = () => {
           >
             <CarCardComponent
               id={car._id}
+              user_id={car.user_id}
               title={car.title}
               description={car.description}
-              url={car.url}
-              alt={car.alt}
+              url={car.image.url}
+              alt={car.image.alt}
               carType={car.carType}
               carModel={car.carModel}
-              city={car.city}
-              street={car.street}
-              houseNumber={car.houseNumber}
+              city={car.address.city}
+              street={car.address.street}
+              houseNumber={car.address.houseNumber}
               phone={car.phone}
               price={car.price}
+              loggedIn={thisUser.isLoggedIn || ""}
               handleCheckOutClick={rentBtnClick}
-              /* isLiked={
-                likedCarsArr.find(
-                  (card) =>
-                    card.carId == car.id && car.userIds.includes(userId)
-                )
-                  ? true
-                  : false
-              } */
+              isLiked={
+                thisUser.payload
+                  ? car.likes.includes(thisUser.payload.userId)
+                    ? true
+                    : false
+                  : ""
+              }
               handleLikeClick={likeClick}
             />
           </Grid>

@@ -7,12 +7,19 @@
 @import "./css/checkoutCard";
 @import "./css/ourCarsPage";
 @import "./css/aboutUs";
+@import "./css//checkout";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: roboto, sans-serif;
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+  //flex-direction: column;
 }
 
 .boxHeader {
@@ -30,4 +37,25 @@
   font-family: roboto;
   font-size: 1.3em !important;
   padding: 0.5em 1em 0.5em 1em;
+}
+
+.smallImg {
+  width: 30%;
+}
+
+.modalBox {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(255, 255, 255, 0.693);
+}
+.modalBoxDark {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 40%;
+  background-color: rgba(0, 0, 0, 0.615);
 }

@@ -4,6 +4,7 @@ import {
   Box,
   Grid,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -47,6 +48,10 @@ const OurCarsPage = () => {
     }
   };
 
+  const handleAddCar = () => {
+    navigate("/addcar/");
+  };
+
   if (!myCars) {
     return <CircularProgress />;
   }
@@ -73,15 +78,20 @@ const OurCarsPage = () => {
           </Grid>
         </Box>
         <Box>
-          <Grid container sx={{ display: "flex" }}>
+          <Grid container className="centerContent">
+            <Grid item xs={12} className="centerContent">
+              <Button
+                variant="contained"
+                size="large"
+                onClick={handleAddCar}
+                sx={{ marginTop: 2, marginBottom: 2 }}
+              >
+                Add A New Car
+              </Button>
+            </Grid>
             {/* CAR CARD */}
             {myCars.map((car) => (
-              <Grid
-                item
-                xs={9}
-                className="cardGridItem"
-                key={car.title + Date.now()}
-              >
+              <Grid item xs={9} key={car.title + Date.now()}>
                 <MyCarCardComponent
                   id={car._id}
                   title={car.title}

@@ -22,72 +22,26 @@ import { toast } from "react-toastify";
 import cardInputs from "../utils/cardInputs";
 import EditCardInput from "../components/EditCardInputs";
 
-const EditCarPage = () => {
-  const { id } = useParams();
-  const [inputState, setInputState] = useState("");
+const AddNewCarPage = () => {
+  const [inputState, setInputState] = useState({});
 
   const [inputsErrorsState, setInputsErrorsState] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const errors = validateEditCardParamsSchema({ id });
-        if (errors) {
-          navigate("/");
-          return;
-        }
-        const { data } = await axios.get("/cars/" + id);
-        let newInputState = {
-          ...data,
-        };
-        if (data.image && data.image.url) {
-          newInputState.url = data.image.url;
-        } else {
-          newInputState.url = "";
-        }
-        if (data.image && data.image.alt) {
-          newInputState.alt = data.image.alt;
-        } else {
-          newInputState.alt = "";
-        }
-        if (data.address) {
-          newInputState.country = data.address.country;
-          newInputState.city = data.address.city;
-          newInputState.street = data.address.street;
-          newInputState.houseNumber = data.address.houseNumber;
-          newInputState.zip = data.address.zip;
-        }
-
-        delete newInputState.image;
-        delete newInputState.address;
-        //delete newInputState.bookedDates;
-        delete newInputState.likes;
-        delete newInputState._id;
-        delete newInputState.user_id;
-        delete newInputState.createdAt;
-        delete newInputState.__v;
-        setInputState(newInputState);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [id]);
-
   const handleSaveBtnClick = async (ev) => {
     try {
-      const { bookedDates, ...updatedInputState } = inputState;
-      const joiResponse = validateEditSchema(updatedInputState);
+      //const { bookedDates, ...updatedInputState } = inputState;
+      const joiResponse = validateEditSchema(inputState);
       console.log("joi Response", joiResponse);
       setInputsErrorsState(joiResponse);
       if (!joiResponse) {
-        await axios.put("/cars/" + id, updatedInputState);
-        toast.success("Car Updated");
+        await axios.post("/cars/", inputState);
+        toast.success("New Car Added!");
         navigate(ROUTES.MYCARS);
       }
     } catch (err) {
       console.log(err);
-      toast.error("Couldn't apply changes. Please try again");
+      toast.error("Couldn't add car. Please try again");
     }
   };
 
@@ -99,11 +53,6 @@ const EditCarPage = () => {
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
   };
-
-  if (!inputState) {
-    return <CircularProgress />;
-  }
-  console.log("inputState", inputState);
 
   return (
     <Container component="main" maxWidth="md">
@@ -119,7 +68,7 @@ const EditCarPage = () => {
           <EditIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Edit card
+          Add New Car
         </Typography>
         <Box
           component="img"
@@ -135,7 +84,7 @@ const EditCarPage = () => {
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {cardInputs.map((item) => (
-              <Grid item xs={12} sm={6} key={item.inputName + "EditCardPage"}>
+              <Grid item xs={12} sm={6} key={item.inputName + "AddCardPage"}>
                 {item.stateName === "description" ? (
                   <TextField
                     label={item.inputName}
@@ -191,4 +140,5 @@ const EditCarPage = () => {
     </Container>
   );
 };
-export default EditCarPage;
+
+export default AddNewCarPage;

@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import DatePicker from "../components/DatePicker";
@@ -7,7 +6,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { dateActions } from "../store/dateHandler";
 import { useEffect, useState } from "react";
-import useDatePicker from "../hooks/useDatePicker";
 import Container from "@mui/material/Container";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
@@ -18,11 +16,8 @@ const Homepage = () => {
     end: "",
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //const yourChoice = useDatePicker();
   const currentDate = new Date();
 
   const handleDateChange = (dateText, newDate) => {
@@ -48,8 +43,10 @@ const Homepage = () => {
     }
     dispatch(dateActions.setStartDate(chosenDates.start));
     dispatch(dateActions.setEndDate(chosenDates.end));
-    navigate(ROUTES.INVENTORY);
+    dispatch(dateActions.calculateDays());
+    navigate(`/car-inv/${chosenDates.start}/${chosenDates.end}`);
   };
+
   return (
     <Container maxWidth="lg">
       <Grid container className={"gridContainerHomePage"}>

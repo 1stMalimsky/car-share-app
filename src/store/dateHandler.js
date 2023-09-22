@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import moment from "moment/moment";
 
 const initialState = {
     startDate: "",
     endDate: "",
+    numOfDays: "",
 };
 
 const dateSlice = createSlice({
@@ -15,6 +17,11 @@ const dateSlice = createSlice({
         setEndDate: (initialState, action) => {
             initialState.endDate = action.payload;
         },
+        calculateDays: (initialState) => {
+            const date1 = moment(Number(initialState.startDate));
+            const date2 = moment(Number(initialState.endDate));
+            initialState.numOfDays = date2.diff(date1, 'days');
+        }
     },
 });
 

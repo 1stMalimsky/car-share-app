@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { Modal, Button, Typography, Box } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { useSelector } from "react-redux";
 
 const AboutOwnerExpand = ({ ownerProfile }) => {
   const [open, setOpen] = useState(false);
+
+  let isDarkMode = useSelector(
+    (storePie) => storePie.darkThemeSlice.isDarkTheme
+  );
 
   const handleOpen = () => {
     setOpen(true);
@@ -24,16 +29,7 @@ const AboutOwnerExpand = ({ ownerProfile }) => {
         About The Owner
       </Button>
       <Modal open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            maxWidth: "40%",
-            backgroundColor: "white",
-          }}
-        >
+        <Box className={isDarkMode ? "modalBoxDark" : "modalBox"}>
           <Typography component="h3" variant="h4">
             About The Owner
           </Typography>

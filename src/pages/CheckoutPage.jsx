@@ -1,54 +1,111 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CircularProgress, Container, Grid, Typography } from "@mui/material";
+import ExtrasBtn from "../components/EXtrasBtn";
+import {
+  CircularProgress,
+  Container,
+  Grid,
+  Typography,
+  Box,
+} from "@mui/material";
 import CheckoutCard from "../components/CheckoutCard/CheckoutCard";
-import carCatalog from "../components/CarCard/carCatalog";
-import { useSelector } from "react-redux";
+import axios from "axios";
 
 const CheckoutPage = () => {
-  const { id } = useParams();
-  const [inputState, setInputState] = useState(
-    carCatalog.find((car) => car._id == id)
-  );
+  const params = useParams();
+  const [inputState, setInputState] = useState(null);
   const [totalPrice, setTotalPrice] = useState("");
 
-  const chosenDates = useSelector((storePie) => storePie.dateSlice);
+  useEffect(() => {
+    axios
+      .get("/cars/" + params.id)
+      .then(({ data }) => {
+        setInputState(data);
+        console.log("here");
+      })
+      .catch((err) => {
+        console.log("err from axios", err);
+      });
+  }, []);
 
   useEffect(() => {
-    const timeDiff = Math.abs(chosenDates.startDate - chosenDates.endDate);
-    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    const total = inputState.price * daysDiff;
+    if (!inputState) {
+      return;
+    }
+    const total = inputState.price * params.numOfDays;
     setTotalPrice(total);
-  }, [chosenDates]);
+  }, [inputState]);
 
   const navigate = useNavigate();
   const likeClick = () => {};
   const rentBtnClick = (id) => {
     navigate(`/checkout/${id}`);
   };
-  if (!inputState) {
+
+  const handleExtraClick = (text, clicked) => {
+    console.log("text", text);
+    console.log("clicked", clicked);
+    const totalInsurance = params.numOfDays * 25;
+    const totalSeat = params.numOfDays * 15;
+    const totalAdd = params.numOfDays * 30;
+    if (clicked) {
+      switch (text) {
+        case "Insurance":
+          setTotalPrice((prevPrice) => prevPrice - totalInsurance);
+          break;
+        case "Infant Seat":
+          setTotalPrice((prevPrice) => prevPrice - totalSeat);
+          break;
+        case "Additional Driver":
+          setTotalPrice((prevPrice) => prevPrice - totalAdd);
+          break;
+        default:
+          setTotalPrice(totalPrice);
+      }
+    } else {
+      switch (text) {
+        case "Insurance":
+          setTotalPrice((prevPrice) => prevPrice + totalInsurance);
+          break;
+        case "Infant Seat":
+          setTotalPrice((prevPrice) => prevPrice + totalSeat);
+          break;
+        case "Additional Driver":
+          setTotalPrice((prevPrice) => prevPrice + totalAdd);
+          break;
+        default:
+          setTotalPrice(totalPrice);
+      }
+    }
+  };
+  if (!inputState || !totalPrice) {
     return <CircularProgress />;
   }
-  console.log("chosen dates", chosenDates);
   return (
     <Container>
       <Typography variant="h1">Checkout Page</Typography>
-      <Grid container sx={{ display: "flex" }}>
+      <Grid container>
+        {/* SideBar */}
         <Grid item xs={3}>
           <Typography variant="h5">Add Extras</Typography>
+          <ExtrasBtn text="Insurance" onClick={handleExtraClick} />
+          <ExtrasBtn text="Infant Seat" onClick={handleExtraClick} />
+          <ExtrasBtn text="Additional Driver" onClick={handleExtraClick} />
         </Grid>
+        {/* Main */}
         <Grid item xs={9}>
           <CheckoutCard
             id={inputState._id}
+            user_id={inputState.user_id}
             title={inputState.title}
             description={inputState.description}
-            url={inputState.url}
-            alt={inputState.alt}
+            url={inputState.image.url}
+            alt={inputState.image.alt}
             carType={inputState.carType}
-            carModel={inputState.carModel}
-            city={inputState.city}
-            street={inputState.street}
-            houseNumber={inputState.houseNumber}
+            carModel={inputState.address.carModel}
+            city={inputState.address.city}
+            street={inputState.address.street}
+            houseNumber={inputState.address.houseNumber}
             phone={inputState.phone}
             price={inputState.price}
             totalPrice={totalPrice}
