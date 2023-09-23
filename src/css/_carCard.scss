@@ -7,6 +7,10 @@
   padding: 0.6em;
 }
 
+.aboutCarCardItem {
+  padding: 0.6em;
+}
+
 .carCardImgItem {
   padding: 0.6em;
   max-width: 20em !important;
@@ -37,4 +41,16 @@
 
 .imgXpand {
   max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .cardGridContainer {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .aboutCarCardItem {
+    margin-top: 4.2em !important;
+  }
 }

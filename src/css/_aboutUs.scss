@@ -29,5 +29,20 @@
 }
 
 .aboutSmTitle {
+  font-size: 1.5em !important;
   text-decoration: underline;
+}
+
+.aboutTxt {
+  font-size: 1.2em !important;
+}
+
+@media (max-width: 600px) {
+  .aboutSmTitle {
+    font-size: 1.2em !important;
+    text-decoration: underline;
+  }
+  .aboutTxt {
+    font-size: 0.8em !important;
+  }
 }

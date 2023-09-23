@@ -1,27 +1,24 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ExtrasBtn from "../components/EXtrasBtn";
-import {
-  CircularProgress,
-  Container,
-  Grid,
-  Typography,
-  Box,
-} from "@mui/material";
+import { CircularProgress, Container, Grid, Typography } from "@mui/material";
 import CheckoutCard from "../components/CheckoutCard/CheckoutCard";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const CheckoutPage = () => {
   const params = useParams();
   const [inputState, setInputState] = useState(null);
   const [totalPrice, setTotalPrice] = useState("");
+  const navigate = useNavigate();
+
+  const isloggedIn = useSelector((storePie) => storePie.authSlice.isLoggedIn);
 
   useEffect(() => {
     axios
       .get("/cars/" + params.id)
       .then(({ data }) => {
         setInputState(data);
-        console.log("here");
       })
       .catch((err) => {
         console.log("err from axios", err);
@@ -36,15 +33,18 @@ const CheckoutPage = () => {
     setTotalPrice(total);
   }, [inputState]);
 
-  const navigate = useNavigate();
-  const likeClick = () => {};
+  const likeClick = async (id) => {
+    try {
+      await axios.patch(`/cars/like/${id}/`);
+    } catch (err) {
+      console.log("like update error", err);
+    }
+  };
   const rentBtnClick = (id) => {
     navigate(`/checkout/${id}`);
   };
 
   const handleExtraClick = (text, clicked) => {
-    console.log("text", text);
-    console.log("clicked", clicked);
     const totalInsurance = params.numOfDays * 25;
     const totalSeat = params.numOfDays * 15;
     const totalAdd = params.numOfDays * 30;
@@ -83,7 +83,6 @@ const CheckoutPage = () => {
   }
   return (
     <Container>
-      <Typography variant="h1">Checkout Page</Typography>
       <Grid container>
         {/* SideBar */}
         <Grid item xs={3}>
@@ -109,6 +108,7 @@ const CheckoutPage = () => {
             phone={inputState.phone}
             price={inputState.price}
             totalPrice={totalPrice}
+            loggedIn={isloggedIn}
             handleLikeClick={likeClick}
             handleCheckOutClick={rentBtnClick}
           />

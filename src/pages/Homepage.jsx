@@ -72,7 +72,7 @@ const Homepage = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={6} sx={{ marginLeft: 2 }}>
-          <Grid container spacing={2}>
+          <Grid container spacing={1} className="alignItems">
             <Grid item xs={12} md={5}>
               <DatePicker
                 dateText="Pickup Date"

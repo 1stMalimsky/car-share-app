@@ -5,10 +5,9 @@ import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CarCardComponent from "../components/CarCard/CarCard";
 import useSort from "../hooks/useSort";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import DatePicker from "../components/DatePicker";
 import { useNavigate, useParams } from "react-router-dom";
-import { dateActions } from "../store/dateHandler";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ROUTES from "../routes/ROUTES";
@@ -17,7 +16,6 @@ import moment from "moment/moment";
 const CarInv = () => {
   const params = useParams();
   const [sortPick, setSortPick] = useState("");
-  const [cars, setCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
   const [chosenDates, setChosenDates] = useState({
     startDate: +params.start,
@@ -79,10 +77,6 @@ const CarInv = () => {
     }));
   };
 
-  useEffect(() => {
-    console.log("chosenDates", chosenDates);
-  }, [chosenDates]);
-
   const handleSearchClick = () => {
     const adjustedCurrentDate = currentDate.setHours(0, 0, 0, 0);
     if (
@@ -122,27 +116,32 @@ const CarInv = () => {
         {/* HEADER */}
         <Grid item xs={12} className="headerGridItem"></Grid>
         {/* SIDE MENU */}
-        <Grid item xs={3} className="sideGridItem">
-          <SortComponent onSortClick={sortBtnClick} />
-          <DatePicker
-            dateText="Pickup Date"
-            onChange={(newDate) => handleDateChange("startDate", newDate)}
-            value={params.start}
-          />
-          <DatePicker
-            dateText="Return Date"
-            onChange={(newDate) => handleDateChange("endDate", newDate)}
-            value={params.end}
-          />
-          <Button variant="contained" onClick={handleSearchClick}>
-            Search
-          </Button>
+        <Grid item xs={3} sx={{ display: { xs: "none", md: "block" } }}>
+          <div className="sideGridItem">
+            <SortComponent onSortClick={sortBtnClick} />
+          </div>
+          <div className="sideGridItem">
+            <DatePicker
+              dateText="Pickup Date"
+              onChange={(newDate) => handleDateChange("startDate", newDate)}
+              value={params.start}
+            />
+            <DatePicker
+              dateText="Return Date"
+              onChange={(newDate) => handleDateChange("endDate", newDate)}
+              value={params.end}
+            />
+            <Button variant="contained" onClick={handleSearchClick}>
+              Search
+            </Button>
+          </div>
         </Grid>
         {/* CAR CARD */}
         {filteredCars.map((car) => (
           <Grid
             item
-            xs={9}
+            xs={12}
+            md={9}
             className="cardGridItem"
             key={car.title + Date.now()}
           >

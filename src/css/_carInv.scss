@@ -4,3 +4,17 @@
   flex-direction: column;
   margin-left: auto !important;
 }
+
+.sideGridItem {
+  margin-bottom: 0.8em;
+}
+
+.ourCarsSideGridItem {
+  margin-bottom: 0.8em;
+}
+
+@media (max-width: 600px) {
+  .ourCarsSideGridItem {
+    display: none;
+  }
+}

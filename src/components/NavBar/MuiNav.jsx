@@ -19,16 +19,14 @@ import SearchPartial from "./SearchPartial";
 import MiniMenuNavLink from "./MiniMenuNavLink";
 import { pages, loggedInPages, notAuthPages, adminPages } from "./navbarPages";
 import logo from "../../assets/imgs/logo.png";
-import Button from "@mui/material/Button";
 
 const MuiNavbar = () => {
-  const isLoggedIn = useSelector((storePie) => storePie.authSlice.isLoggedIn);
-  const userDetails = useSelector((storePie) => storePie.authSlice.payload);
+  const user = useSelector((storePie) => storePie.authSlice);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const dispatch = useDispatch();
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -54,7 +52,7 @@ const MuiNavbar = () => {
               <img src={logo} alt="logo" className="logoImgDark" />
             )}
           </NavLink>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
             {pages.map((page) => (
               <NavLinkComponent
                 key={page.label}
@@ -62,7 +60,7 @@ const MuiNavbar = () => {
                 className="navLink"
               />
             ))}
-            {isLoggedIn ? (
+            {user.isLoggedIn ? (
               <NavLinkComponent
                 key={loggedInPages[0].url}
                 {...loggedInPages[0]}
@@ -71,7 +69,7 @@ const MuiNavbar = () => {
             ) : (
               ""
             )}
-            {userDetails && userDetails.isAdmin ? (
+            {user.payload && user.payload.isAdmin ? (
               <NavLinkComponent
                 key={adminPages.url}
                 {...adminPages[0]}
@@ -97,8 +95,8 @@ const MuiNavbar = () => {
               )}
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            {isLoggedIn
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
+            {user.isLoggedIn
               ? loggedInPages.map((page) =>
                   page.label === "LIKED CARS" ? (
                     ""
@@ -116,7 +114,7 @@ const MuiNavbar = () => {
                   <NavLinkComponent key={page.url} {...page} />
                 ))}
           </Box>
-          {isLoggedIn ? (
+          {user.isLoggedIn ? (
             <NavLink to={ROUTES.PROFILE}>
               <IconButton>
                 <AccountCircleIcon fontSize={"large"} />
@@ -127,7 +125,7 @@ const MuiNavbar = () => {
             sx={{
               flexGrow: 1,
               flex: 1,
-              display: { xs: "flex", md: "none" },
+              display: { xs: "flex", lg: "none" },
               justifyContent: "flex-end",
             }}
           >
@@ -149,7 +147,7 @@ const MuiNavbar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "block", xl: "none" },
               }}
             >
               {pages.map((page) => (
@@ -160,7 +158,7 @@ const MuiNavbar = () => {
                   {...page}
                 ></MiniMenuNavLink>
               ))}
-              {userDetails && userDetails.isAdmin ? (
+              {user.payload && user.payload.isAdmin ? (
                 <MiniMenuNavLink
                   key={"adminMiniLinks_isAdmin" + Date.now()}
                   {...adminPages[0]}
@@ -168,7 +166,7 @@ const MuiNavbar = () => {
               ) : (
                 ""
               )}
-              {isLoggedIn
+              {user.isLoggedIn
                 ? loggedInPages.map((page) =>
                     page.url === ROUTES.LOGOUT ? (
                       <MiniMenuNavLink
@@ -197,5 +195,4 @@ const MuiNavbar = () => {
     </AppBar>
   );
 };
-
 export default MuiNavbar;

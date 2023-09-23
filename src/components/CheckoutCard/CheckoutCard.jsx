@@ -24,6 +24,7 @@ const CheckoutCard = ({
   phone,
   price,
   totalPrice,
+  loggedIn,
   handleLikeClick,
   handleCheckOutClick,
 }) => {
@@ -42,7 +43,7 @@ const CheckoutCard = ({
   }, []);
 
   const likeClicked = () => {
-    handleLikeClick();
+    handleLikeClick(id);
     setLikeStatus(!likeStatus);
   };
 
@@ -104,7 +105,11 @@ const CheckoutCard = ({
         >
           Rent
         </Button>
-        <IconButton onClick={likeClicked} className="checkoutCardBtn">
+        <IconButton
+          onClick={likeClicked}
+          className="checkoutCardBtn"
+          sx={{ display: loggedIn ? "flex" : "none" }}
+        >
           {!likeStatus ? (
             <FavoriteBorderIcon fontSize="large" />
           ) : (

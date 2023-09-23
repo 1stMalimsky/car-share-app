@@ -39,10 +39,8 @@ const AboutPage = () => {
         <Grid container className="aboutPageGridContainer">
           <Grid item xs={12} md={7}>
             <Box className="aboutUsDarkTab">
-              <Typography variant="h6" className="aboutSmTitle">
-                Register
-              </Typography>
-              <Typography variant="h6">
+              <Typography className="aboutSmTitle">Register</Typography>
+              <Typography className="aboutTxt">
                 To unlock all of the posibilites of this app, consider
                 registering. Only registered users can like cars, add their own
                 cars and start making money.
@@ -60,7 +58,7 @@ const AboutPage = () => {
               Like&nbsp;
               <FavoriteIcon />
             </Typography>
-            <Typography variant="h6">
+            <Typography className="aboutTxt">
               Registered users can like cars they find interesting. Once you've
               like a car, it will appear in you "liked cars" page.
             </Typography>
@@ -69,7 +67,7 @@ const AboutPage = () => {
               <Typography variant="h6" className="aboutSmTitle">
                 Rent a car
               </Typography>
-              <Typography variant="h6">
+              <Typography className="aboutTxt">
                 Check out our collection of cars and find the perfect match for
                 you! To find a car, input your deseired rental dates and we'll
                 show you everything we have to offer.
@@ -79,7 +77,7 @@ const AboutPage = () => {
             <Typography variant="h6" className="aboutSmTitle">
               Add a new car
             </Typography>
-            <Typography variant="h6">
+            <Typography className="aboutTxt">
               Add your car to our collection of cars and start making money off
               car rentals. You must be a registered user!
             </Typography>

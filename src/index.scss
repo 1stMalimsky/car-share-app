@@ -59,3 +59,34 @@
   max-width: 40%;
   background-color: rgba(0, 0, 0, 0.615);
 }
+
+@media (max-width: 600px) {
+  .modalBox {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    background-color: rgba(255, 255, 255, 0.693);
+  }
+  .modalBoxDark {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    background-color: rgba(0, 0, 0, 0.615);
+  }
+
+  .pageTitle {
+    font-family: "belanosima" !important;
+    font-size: medium;
+    padding: 0 1em 0 1em;
+  }
+
+  .pageSubtitle {
+    font-family: roboto;
+    font-size: 1em !important;
+    padding: 0.5em 1em 0.5em 1em;
+  }
+}

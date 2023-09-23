@@ -35,7 +35,6 @@ const EditProfilePage = () => {
         let newInputState = {
           ...data,
         };
-        console.log("input data", newInputState);
         if (data.image && data.image.url) {
           newInputState.url = data.image.url;
         } else {
@@ -82,7 +81,6 @@ const EditProfilePage = () => {
       setInputsErrorsState(joiResponse);
       if (!joiResponse) {
         normalizeUser(updatedInputState);
-        console.log("updated input", updatedInputState);
         await axios.put("/user/" + payload.userId, updatedInputState);
         toast.success("User Updated");
         navigate(ROUTES.HOME);

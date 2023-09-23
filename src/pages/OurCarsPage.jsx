@@ -16,7 +16,6 @@ import { toast } from "react-toastify";
 const OurCarsPage = () => {
   const [sortPick, setSortPick] = useState("");
   const [cars, setCars] = useState([]);
-  //const [currentUser, setCurrentUser] = useState("");
   const [likedCars, setLikedCars] = useState([]);
 
   const isDarkTheme = useSelector(
@@ -35,21 +34,6 @@ const OurCarsPage = () => {
         toast.error("Oops! Couldn't load your cards. Please try again");
       });
   }, []);
-
-  /* useEffect(() => {
-      axios
-        .get("/user/" + thisUser.payload.userId)
-        .then(({ data }) => {
-          if (!data) {
-            return;
-          }
-          setCurrentUser(data);
-        })
-        .catch((err) => {
-          console.log("err from axios", err);
-          toast.error("Oops! Couldn't load your cards. Please try again");
-        });
-  }, []); */
 
   const sortBtnClick = (value) => {
     setSortPick(value);
@@ -97,14 +81,15 @@ const OurCarsPage = () => {
         <Box>
           <Grid container sx={{ display: "flex" }}>
             {/* SIDE MENU */}
-            <Grid item xs={3} className="sideGridItem">
+            <Grid item xs={3} className="ourCarsSideGridItem">
               <SortComponent onSortClick={sortBtnClick} />
             </Grid>
             {/* CAR CARD */}
             {cars.map((car) => (
               <Grid
                 item
-                xs={9}
+                xs={12}
+                sm={9}
                 className="cardGridItem"
                 key={car.title + Date.now()}
               >

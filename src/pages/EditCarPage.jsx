@@ -103,7 +103,6 @@ const EditCarPage = () => {
   if (!inputState) {
     return <CircularProgress />;
   }
-  console.log("inputState", inputState);
 
   return (
     <Container component="main" maxWidth="md">

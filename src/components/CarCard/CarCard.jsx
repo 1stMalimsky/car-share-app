@@ -65,11 +65,11 @@ const CarCardComponent = ({
   return (
     <Grid container className="cardGridContainer">
       {/* img item */}
-      <Grid item xs={5} className="carCardImgItem">
+      <Grid item xs={12} sm={5} className="carCardImgItem">
         <ImgXpand url={url} alt={alt} className="imgURL" />
       </Grid>
 
-      <Grid item xs={7}>
+      <Grid item xs={12} sm={7}>
         <Grid container sx={{ display: "flex", flexDirection: "row" }}>
           {/* title and description */}
           <Grid item xs={12} className="carCardItem">
@@ -79,7 +79,7 @@ const CarCardComponent = ({
             <Typography variant="body2">Description: {description}</Typography>
           </Grid>
           {/* car details */}
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6} sx={{ marginBottom: 2 }}>
             <Typography variant="body2">
               Car Type: {carType}
               <br />
@@ -91,7 +91,7 @@ const CarCardComponent = ({
             </Typography>
           </Grid>
           {/* location details */}
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="body2">
               <span style={{ textDecoration: "underline" }}>Location</span>
               <br />
