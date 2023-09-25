@@ -3,11 +3,10 @@ import Grid from "@mui/material/Grid";
 import DatePicker from "../components/DatePicker";
 import { Button } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { dateActions } from "../store/dateHandler";
 import { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
-import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 
 const Homepage = () => {

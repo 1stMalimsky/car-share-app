@@ -9,6 +9,10 @@ import {
   Typography,
   Container,
   Alert,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -23,16 +27,15 @@ import cardInputs from "../utils/cardInputs";
 import EditCardInput from "../components/EditCardInputs";
 
 const AddNewCarPage = () => {
-  const [inputState, setInputState] = useState({});
-
+  const [inputState, setInputState] = useState(
+    Object.fromEntries(cardInputs.map((item) => [item.stateName, ""]))
+  );
   const [inputsErrorsState, setInputsErrorsState] = useState("");
   const navigate = useNavigate();
 
-  const handleSaveBtnClick = async (ev) => {
+  const handleSaveBtnClick = async () => {
     try {
-      //const { bookedDates, ...updatedInputState } = inputState;
       const joiResponse = validateEditSchema(inputState);
-      console.log("joi Response", joiResponse);
       setInputsErrorsState(joiResponse);
       if (!joiResponse) {
         await axios.post("/cars/", inputState);
@@ -50,7 +53,9 @@ const AddNewCarPage = () => {
   };
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
-    newInputState[ev.target.id] = ev.target.value;
+    if (!ev.target.id) {
+      newInputState.carType = ev.target.value;
+    } else newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
   };
 
@@ -95,6 +100,22 @@ const AddNewCarPage = () => {
                     multiline
                     fullWidth
                   />
+                ) : item.stateName === "carType" ? (
+                  <FormControl fullWidth>
+                    <InputLabel>Car Type</InputLabel>
+                    <Select
+                      id={item.stateName}
+                      value={inputState[item.stateName]}
+                      label="Car Type"
+                      onChange={handleInputChange}
+                    >
+                      <MenuItem value={"Sedan"}>Sedan</MenuItem>
+                      <MenuItem value={"Minivan"}>Minivan</MenuItem>
+                      <MenuItem value={"Van"}>Van</MenuItem>
+                      <MenuItem value={"Truck"}>Truck</MenuItem>
+                      <MenuItem value={"Jeep"}>Jeep</MenuItem>
+                    </Select>
+                  </FormControl>
                 ) : (
                   <EditCardInput
                     input={item.stateName}

@@ -2,15 +2,16 @@
   display: flex;
   margin-bottom: 1em !important;
   flex-direction: column;
-  margin-left: auto !important;
+  /*  margin-left: auto !important; */
 }
 
 .sideGridItem {
-  margin-bottom: 0.8em;
+  margin-bottom: 0.8em !important;
 }
 
 .ourCarsSideGridItem {
-  margin-bottom: 0.8em;
+  display: flex;
+  flex-direction: column !important;
 }
 
 @media (max-width: 600px) {

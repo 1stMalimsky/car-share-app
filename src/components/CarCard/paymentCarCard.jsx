@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { CircularProgress } from "@mui/material";
-import AboutOwnerExpand from "../AboutOwnerExpand";
 import ImgXpand from "../ImgExpand";
 import axios from "axios";
 
-const CheckoutCard = ({
+const PaymentCarCard = ({
   id,
   user_id,
   title,
@@ -27,7 +25,6 @@ const CheckoutCard = ({
   totalPrice,
   loggedIn,
   handleLikeClick,
-  handleCheckOutClick,
 }) => {
   const [likeStatus, setLikeStatus] = useState(false);
   const [ownerProfile, setOwnerProfile] = useState(null);
@@ -48,27 +45,23 @@ const CheckoutCard = ({
     setLikeStatus(!likeStatus);
   };
 
-  const handleCheckOut = () => {
-    handleCheckOutClick(id);
-  };
-
   if (!ownerProfile) {
     return <CircularProgress />;
   }
 
   return (
-    <Grid container className="checkoutCardGridContainer">
-      {/* img item */}
-      <Grid item xs={5} className="checkoutCarCardImgItem">
+    <Grid container className="PaymentCarCardGridContainer">
+      {/* Title */}
+      <Grid item xs={12} sx={{ flexDirection: "column" }}>
+        <Typography gutterBottom variant="h5" component="div">
+          {title}
+        </Typography>
         <ImgXpand url={url} alt={alt} className="imgURL" />
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={12}>
         <Grid container sx={{ display: "flex", flexDirection: "row" }}>
-          {/* title and description */}
+          {/* description */}
           <Grid item xs={12} className="checkoutCarCardItem">
-            <Typography gutterBottom variant="h5" component="div">
-              {title}
-            </Typography>
             <Typography variant="body2">Description: {description}</Typography>
           </Grid>
           {/* car details */}
@@ -99,16 +92,9 @@ const CheckoutCard = ({
       </Grid>
       {/* buttons */}
       <Grid item xs={6} className="checkoutCarCardBtnSection">
-        <Button
-          variant="contained"
-          className="checkoutCardBtn"
-          onClick={handleCheckOut}
-        >
-          RENT
-        </Button>
         <IconButton
           onClick={likeClicked}
-          className="checkoutCardBtn"
+          className="PaymentCarCardBtn"
           sx={{ display: loggedIn ? "flex" : "none" }}
         >
           {!likeStatus ? (
@@ -117,14 +103,9 @@ const CheckoutCard = ({
             <FavoriteIcon fontSize="large" />
           )}
         </IconButton>
-        <AboutOwnerExpand
-          ownerProfile={ownerProfile}
-          className="checkoutCardBtn"
-        />
       </Grid>
-      <Grid item xs={3}></Grid>
-      <Grid item xs={3} className="checkoutPrice">
-        <Typography variant="h6">
+      <Grid item xs={12} className="checkoutPrice">
+        <Typography variant="body1">
           Your Total price is:
           <br />
           {totalPrice} ILS
@@ -134,4 +115,4 @@ const CheckoutCard = ({
   );
 };
 
-export default CheckoutCard;
+export default PaymentCarCard;

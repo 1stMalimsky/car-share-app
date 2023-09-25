@@ -17,6 +17,20 @@
   max-height: 15em !important;
 }
 
+.cardGridListContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.cardModalList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
 .carCardBtnSection {
   padding: 0.6em;
   display: flex;

@@ -4,7 +4,6 @@ import {
   Box,
   Grid,
   CircularProgress,
-  Modal,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,7 +15,6 @@ import useSort from "../hooks/useSort";
 import axios from "axios";
 import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
-import CarInfoModal from "../components/CarInfoModal";
 
 const OurCarsPage = () => {
   const [sortPick, setSortPick] = useState("");
@@ -96,6 +94,7 @@ const OurCarsPage = () => {
   if (!cars.length === 0) {
     <CircularProgress />;
   }
+
   return (
     <Container component="main" maxWidth="lg">
       <Box className="registerBox">
@@ -118,77 +117,47 @@ const OurCarsPage = () => {
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ display: "flex" }}>
-          {/* SIDE MENU */}
-          <Grid container sx={{ maxWidth: "15em" }}>
-            <Grid item xs={8} className="ourCarsSideGridItem">
+        <Box>
+          <Grid container sx={{ display: "flex" }}>
+            {/* SIDE MENU */}
+            <Grid item xs={2} className="ourCarsSideGridItem">
               <SortComponent onSortClick={sortBtnClick} />
               <SortViewComponent onSortClick={handleSortView} />
             </Grid>
-          </Grid>
-          <Grid container>
             {/* CAR CARD */}
             {cars.map((car) => (
               <Grid
                 item
                 xs={12}
-                sm={12}
+                sm={9}
                 className="cardGridItem"
                 key={car.title + Date.now()}
               >
-                {sortView == "List" ? (
-                  <CarCardListView
-                    id={car._id}
-                    user_id={car.user_id}
-                    title={car.title}
-                    description={car.description}
-                    url={car.image.url}
-                    alt={car.image.alt}
-                    carType={car.carType}
-                    carModel={car.carModel}
-                    city={car.address.city}
-                    street={car.address.street}
-                    houseNumber={car.address.houseNumber}
-                    phone={car.phone}
-                    price={car.price}
-                    loggedIn={thisUser.isLoggedIn || false}
-                    handleCheckOutClick={rentBtnClick}
-                    handleLikeClick={likeClick}
-                    isLiked={
-                      thisUser.payload !== null
-                        ? car.likes.includes(thisUser.payload.userId)
-                          ? true
-                          : false
+                <CarCardListView
+                  id={car._id}
+                  user_id={car.user_id}
+                  title={car.title}
+                  description={car.description}
+                  url={car.image.url}
+                  alt={car.image.alt}
+                  carType={car.carType}
+                  carModel={car.carModel}
+                  city={car.address.city}
+                  street={car.address.street}
+                  houseNumber={car.address.houseNumber}
+                  phone={car.phone}
+                  price={car.price}
+                  loggedIn={thisUser.isLoggedIn || false}
+                  handleCheckOutClick={rentBtnClick}
+                  handleLikeClick={likeClick}
+                  isLiked={
+                    thisUser.payload !== null
+                      ? car.likes.includes(thisUser.payload.userId)
+                        ? true
                         : false
-                    }
-                  />
-                ) : (
-                  <CarCardComponent
-                    id={car._id}
-                    user_id={car.user_id}
-                    title={car.title}
-                    description={car.description}
-                    url={car.image.url}
-                    alt={car.image.alt}
-                    carType={car.carType}
-                    carModel={car.carModel}
-                    city={car.address.city}
-                    street={car.address.street}
-                    houseNumber={car.address.houseNumber}
-                    phone={car.phone}
-                    price={car.price}
-                    loggedIn={thisUser.isLoggedIn || false}
-                    handleCheckOutClick={rentBtnClick}
-                    handleLikeClick={likeClick}
-                    isLiked={
-                      thisUser.payload !== null
-                        ? car.likes.includes(thisUser.payload.userId)
-                          ? true
-                          : false
-                        : false
-                    }
-                  />
-                )}
+                      : false
+                  }
+                />
               </Grid>
             ))}
           </Grid>
@@ -197,4 +166,5 @@ const OurCarsPage = () => {
     </Container>
   );
 };
+
 export default OurCarsPage;

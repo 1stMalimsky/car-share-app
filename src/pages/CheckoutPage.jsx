@@ -10,8 +10,8 @@ const CheckoutPage = () => {
   const params = useParams();
   const [inputState, setInputState] = useState(null);
   const [totalPrice, setTotalPrice] = useState("");
+  const [extrasCount, setExtrasCount] = useState(0);
   const navigate = useNavigate();
-
   const isloggedIn = useSelector((storePie) => storePie.authSlice.isLoggedIn);
 
   useEffect(() => {
@@ -41,7 +41,9 @@ const CheckoutPage = () => {
     }
   };
   const rentBtnClick = (id) => {
-    navigate(`/checkout/${id}`);
+    navigate(
+      `/finalize/${id}/${extrasCount}/${params.start}/${params.end}/${params.numOfDays}`
+    );
   };
 
   const handleExtraClick = (text, clicked) => {
@@ -52,12 +54,15 @@ const CheckoutPage = () => {
       switch (text) {
         case "Insurance":
           setTotalPrice((prevPrice) => prevPrice - totalInsurance);
+          setExtrasCount((prevState) => prevState - 1);
           break;
         case "Infant Seat":
           setTotalPrice((prevPrice) => prevPrice - totalSeat);
+          setExtrasCount((prevState) => prevState - 2);
           break;
         case "Additional Driver":
           setTotalPrice((prevPrice) => prevPrice - totalAdd);
+          setExtrasCount((prevState) => prevState - 4);
           break;
         default:
           setTotalPrice(totalPrice);
@@ -66,18 +71,22 @@ const CheckoutPage = () => {
       switch (text) {
         case "Insurance":
           setTotalPrice((prevPrice) => prevPrice + totalInsurance);
+          setExtrasCount((prevState) => prevState + 1);
           break;
         case "Infant Seat":
           setTotalPrice((prevPrice) => prevPrice + totalSeat);
+          setExtrasCount((prevState) => prevState + 2);
           break;
         case "Additional Driver":
           setTotalPrice((prevPrice) => prevPrice + totalAdd);
+          setExtrasCount((prevState) => prevState + 4);
           break;
         default:
           setTotalPrice(totalPrice);
       }
     }
   };
+
   if (!inputState || !totalPrice) {
     return <CircularProgress />;
   }

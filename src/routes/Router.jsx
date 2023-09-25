@@ -15,6 +15,7 @@ import EditCarPage from "../pages/EditCarPage";
 import ProfilePage from "../pages/ProfilePage";
 import AddNewCarPage from "../pages/AddNewCarPage";
 import LikedCarsPage from "../pages/LikedCarsPage";
+import FinalizePage from "../pages/FinalizePage";
 
 const Router = () => {
   return (
@@ -30,6 +31,10 @@ const Router = () => {
       <Route
         path={"/checkout/:id/:start/:end/:numOfDays"}
         element={<CheckoutPage />}
+      />
+      <Route
+        path={"/finalize/:id/:extrasCount/:start/:end/:numOfDays"}
+        element={<FinalizePage />}
       />
       <Route path={ROUTES.LIKEDCARS} element={<LikedCarsPage />} />
       <Route path={ROUTES.ADDCAR} element={<AddNewCarPage />} />

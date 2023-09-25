@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Avatar,
   Button,
-  TextField,
   Grid,
   Box,
   Container,
@@ -10,7 +9,7 @@ import {
 } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
 import validateProfileSchema from "../validation/profileValidation";

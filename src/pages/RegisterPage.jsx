@@ -24,6 +24,7 @@ const RegisterPage = () => {
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
+
   const navigate = useNavigate();
   useEffect(() => {
     if (
@@ -59,8 +60,7 @@ const RegisterPage = () => {
       if (joiResponse) {
         return;
       }
-      await axios.post("/user/users", inputState);
-
+      await axios.post("/user/register", inputState);
       toast.success("Registeration success!");
       navigate(ROUTES.LOGIN);
     } catch (err) {
@@ -125,7 +125,24 @@ const RegisterPage = () => {
                 {inputsErrorsState && inputsErrorsState[item.stateName] && (
                   <Alert severity="warning">
                     {inputsErrorsState[item.stateName].map((err) => (
-                      <div key={item.stateName + err}>{err}</div>
+                      <div key={item.stateName + err}>
+                        {err === "pattern error" ? (
+                          <div>
+                            Password must contain:
+                            <br />
+                            - Uppercase letter
+                            <br />
+                            - Lowercase letter
+                            <br />
+                            - 4 consecutive numbers
+                            <br />
+                            - Special character (@#$%^&*()_)
+                            <br />- At least 8 characters
+                          </div>
+                        ) : (
+                          err
+                        )}
+                      </div>
                     ))}
                   </Alert>
                 )}

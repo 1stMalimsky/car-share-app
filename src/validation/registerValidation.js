@@ -20,8 +20,8 @@ const registerSchema = Joi.object({
     .email({ tlds: { allow: false } })
     .required(),
   password: Joi.string()
-    .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+])[a-zA-Z0-9!@#$%^&*()_+]{8,}$"))
-    .required(),
+    .pattern(new RegExp("^(?=(?:[^A-Z]*[A-Z]))(?=(?:[^0-9]*[0-9]){4})(?=.*[-!@#$%^&*_]).{8,}$"))
+    .required().messages({ "string.pattern.base": "pattern error", "any.required": "Password is required" }),
   imageUrl: Joi.string().custom(validateURL).required(),
   imageAlt: Joi.string().min(0).max(15).required(),
   state: Joi.string().min(0).max(15),
