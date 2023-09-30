@@ -94,14 +94,14 @@ const CheckoutPage = () => {
     <Container>
       <Grid container>
         {/* SideBar */}
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <Typography variant="h5">Add Extras</Typography>
           <ExtrasBtn text="Insurance" onClick={handleExtraClick} />
           <ExtrasBtn text="Infant Seat" onClick={handleExtraClick} />
           <ExtrasBtn text="Additional Driver" onClick={handleExtraClick} />
         </Grid>
         {/* Main */}
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={9}>
           <CheckoutCard
             id={inputState._id}
             user_id={inputState.user_id}

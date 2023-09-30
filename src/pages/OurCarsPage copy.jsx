@@ -131,19 +131,21 @@ const OurCarsPage = () => {
           <Grid container className="ourCarsSideGridContainer">
             <Grid
               item
-              xs={2}
+              xs={8}
               className="ourCarsSideGridItem"
               sx={{ display: cars.length === 0 ? "none" : "block" }}
             >
               <SortComponent onSortClick={sortBtnClick} />
               <SortViewComponent onSortClick={handleSortView} />
             </Grid>
+          </Grid>
+          <Grid container>
             {/* CAR CARD */}
             {cars.map((car) => (
               <Grid
                 item
                 xs={12}
-                sm={9}
+                sm={12}
                 className="cardGridItem"
                 key={car.title + Date.now()}
               >

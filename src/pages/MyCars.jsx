@@ -23,15 +23,20 @@ const OurCarsPage = () => {
   const payload = useSelector((storePie) => storePie.authSlice);
 
   useEffect(() => {
-    axios
-      .get("/cars/my-cars")
-      .then(({ data }) => {
-        setMyCars(data);
-      })
-      .catch((err) => {
-        console.log("err from axios", err);
-        toast.error("Oops! Couldn't load your cards. Please try again");
-      });
+    if (!payload.isLoggedIn) {
+      navigate("/");
+      toast.error("You must be logged in to view this page!");
+    } else {
+      axios
+        .get("/cars/my-cars")
+        .then(({ data }) => {
+          setMyCars(data);
+        })
+        .catch((err) => {
+          console.log("err from axios", err);
+          toast.error("Oops! Couldn't load your cars. Please try again");
+        });
+    }
   }, []);
 
   const handleEditBtn = (id) => {

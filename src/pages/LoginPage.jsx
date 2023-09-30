@@ -11,10 +11,11 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { toast } from "react-toastify";
 import ROUTES from "../routes/ROUTES";
 import validateLoginSchema from "../validation/loginValidation";
 import useLogin from "../hooks/useLogin";
+import { useSelector } from "react-redux";
 
 const LoginPage = () => {
   const [inputState, setInputState] = useState({
@@ -26,7 +27,15 @@ const LoginPage = () => {
   const login = useLogin();
   const navigate = useNavigate();
 
+  const isLoggedIn = useSelector((storePie) => storePie.authSlice.isLoggedIn);
+
   useEffect(() => {
+    if (isLoggedIn) {
+      toast.error(
+        "You are currently logged in. You must logout to login again"
+      );
+      navigate("/");
+    }
     if (inputState.email.trim() && inputState.password.trim()) {
       setButtonDisabledState(false);
     } else {

@@ -2,7 +2,7 @@
   display: flex;
   margin-bottom: 1em !important;
   flex-direction: column;
-  /*  margin-left: auto !important; */
+  margin-left: auto !important;
 }
 
 .sideGridItem {
@@ -10,11 +10,8 @@
 }
 
 .ourCarsSideGridItem {
-  display: flex;
+  display: flex !important;
   flex-direction: column !important;
-}
-.ourCarsSideGridContainer {
-  max-width: 10em;
 }
 
 @media (max-width: 600px) {
@@ -24,5 +21,8 @@
 
   .ourCarsSideGridContainer {
     display: none;
+  }
+  .cardGridItem {
+    margin: 0 auto;
   }
 }

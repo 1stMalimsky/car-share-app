@@ -8,7 +8,7 @@ import { CircularProgress } from "@mui/material";
 import ImgXpand from "../ImgExpand";
 import axios from "axios";
 
-const PaymentCarCard = ({
+const FinalizeCarCard = ({
   id,
   user_id,
   title,
@@ -115,4 +115,4 @@ const PaymentCarCard = ({
   );
 };
 
-export default PaymentCarCard;
+export default FinalizeCarCard;

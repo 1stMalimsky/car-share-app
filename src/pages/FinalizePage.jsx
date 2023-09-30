@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PaymentCarCard from "../components/CarCard/paymentCarCard";
+import FinalizeCarCard from "../components/CarCard/FinalizeCarCard";
 import calcTotalPrice from "../utils/totalPriceCalc";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -94,7 +94,11 @@ const PaymentPage = () => {
       if (joiResponse) {
         return;
       }
-      await axios.put("/cars/book/" + params.id, chosenDates);
+      const datesToSend = {
+        start: +chosenDates.start,
+        end: +chosenDates.end,
+      };
+      await axios.put("/cars/book/" + params.id, datesToSend);
       toast.success("Your Car Has Been Reserved");
     } catch (err) {
       toast.error("Unexpoected error occured");
@@ -112,7 +116,7 @@ const PaymentPage = () => {
   }
   return (
     <Grid container gap={2} sx={{ display: "flex" }}>
-      <Grid item xs={8}>
+      <Grid item xs={12} sm={8}>
         <Grid container>
           <Typography variant="h3">Let's Finalize your reservation!</Typography>
           <Typography variant="body1">
@@ -121,12 +125,12 @@ const PaymentPage = () => {
             logged in, please fill out the form below.
           </Typography>
         </Grid>
-        <Grid container>
+        <Grid container gap={1}>
           {finalizeInputs.map((item) => (
             <Grid
               item
               xs={12}
-              sm={6}
+              sm={5}
               lg={4}
               key={item.inputName + "finalizePage"}
             >
@@ -137,6 +141,7 @@ const PaymentPage = () => {
                 id={item.stateName}
                 onChange={handleInputChange}
                 className="textFieldContainer"
+                fullWidth
               />
               {inputsErrorsState && inputsErrorsState[item.stateName] && (
                 <Alert severity="warning">
@@ -155,8 +160,8 @@ const PaymentPage = () => {
         </Grid>
       </Grid>
       {
-        <Grid item xs={3}>
-          <PaymentCarCard
+        <Grid item xs={12} sm={3}>
+          <FinalizeCarCard
             id={chosenCar._id}
             user_id={chosenCar.user_id}
             title={chosenCar.title}

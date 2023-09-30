@@ -59,10 +59,10 @@ const CheckoutCard = ({
   return (
     <Grid container className="checkoutCardGridContainer">
       {/* img item */}
-      <Grid item xs={5} className="checkoutCarCardImgItem">
+      <Grid item xs={12} sm={5} className="checkoutCarCardImgItem">
         <ImgXpand url={url} alt={alt} className="imgURL" />
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={12} sm={7}>
         <Grid container sx={{ display: "flex", flexDirection: "row" }}>
           {/* title and description */}
           <Grid item xs={12} className="checkoutCarCardItem">
@@ -98,7 +98,7 @@ const CheckoutCard = ({
         </Grid>
       </Grid>
       {/* buttons */}
-      <Grid item xs={6} className="checkoutCarCardBtnSection">
+      <Grid item xs={12} sm={6} className="checkoutCarCardBtnSection">
         <Button
           variant="contained"
           className="checkoutCardBtn"
@@ -123,7 +123,7 @@ const CheckoutCard = ({
         />
       </Grid>
       <Grid item xs={3}></Grid>
-      <Grid item xs={3} className="checkoutPrice">
+      <Grid item xs={12} sm={3} className="checkoutPrice">
         <Typography variant="h6">
           Your Total price is:
           <br />

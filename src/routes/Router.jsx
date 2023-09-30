@@ -26,8 +26,16 @@ const Router = () => {
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={"/car-inv/:start/:end/"} element={<CarInventoryPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
-      <Route path={ROUTES.OURCARS} element={<OurCarsPage />} />
-      <Route path={ROUTES.MYCARS} element={<MyCars />} />
+      <Route
+        path={ROUTES.OURCARS}
+        element={
+          <ProtectedRoute needAdmin={false} element={<LikedCarsPage />} />
+        }
+      />
+      <Route
+        path={ROUTES.MYCARS}
+        element={<ProtectedRoute needAdmin={false} element={<MyCars />} />}
+      />
       <Route path={"/edit/:id"} element={<EditCarPage />} />
       <Route
         path={"/checkout/:id/:start/:end/:numOfDays"}
@@ -37,9 +45,22 @@ const Router = () => {
         path={"/finalize/:id/:extrasCount/:start/:end/:numOfDays"}
         element={<FinalizePage />}
       />
-      <Route path={ROUTES.LIKEDCARS} element={<LikedCarsPage />} />
-      <Route path={ROUTES.ADDCAR} element={<AddNewCarPage />} />
-      <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+      <Route
+        path={ROUTES.LIKEDCARS}
+        element={
+          <ProtectedRoute needAdmin={false} element={<LikedCarsPage />} />
+        }
+      />
+      <Route
+        path={ROUTES.ADDCAR}
+        element={
+          <ProtectedRoute needAdmin={false} element={<AddNewCarPage />} />
+        }
+      />
+      <Route
+        path={ROUTES.PROFILE}
+        element={<ProtectedRoute needAdmin={false} element={<ProfilePage />} />}
+      />
       <Route
         path={ROUTES.ADMIN}
         element={
@@ -49,6 +70,10 @@ const Router = () => {
       <Route
         path={ROUTES.LOGOUT}
         element={<LogoutRoute element={<LogoutLink />} />}
+      />
+      <Route
+        path="*"
+        element={<h1>404... Oops! We couldn't find this page</h1>}
       />
     </Routes>
   );
