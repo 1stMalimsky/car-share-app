@@ -13,9 +13,16 @@
   display: flex;
   flex-direction: column !important;
 }
+.ourCarsSideGridContainer {
+  max-width: 10em;
+}
 
 @media (max-width: 600px) {
   .ourCarsSideGridItem {
+    display: none !important;
+  }
+
+  .ourCarsSideGridContainer {
     display: none;
   }
 }

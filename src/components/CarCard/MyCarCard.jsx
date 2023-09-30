@@ -40,11 +40,11 @@ const MyCarCardComponent = ({
   return (
     <Grid container className="cardGridContainer">
       {/* img item */}
-      <Grid item xs={5} className="carCardImgItem">
+      <Grid item xs={12} sm={5} className="carCardImgItem">
         <ImgXpand url={url} alt={alt} className="imgUrl" />
       </Grid>
 
-      <Grid item xs={7}>
+      <Grid item xs={12} sm={7}>
         <Grid container sx={{ display: "flex", flexDirection: "row" }}>
           {/* title and description */}
           <Grid item xs={12} className="carCardItem">
@@ -80,7 +80,7 @@ const MyCarCardComponent = ({
         </Grid>
       </Grid>
       {/* buttons */}
-      <Grid item xs={12} className="carCardBtnSection">
+      <Grid item xs={12} className="myCarCardBtnSection">
         <Button
           variant="contained"
           className="cardBtn"
@@ -97,7 +97,11 @@ const MyCarCardComponent = ({
         >
           Delete
         </Button>
-        <BookedDatesExpand arr={bookedDates} isDarkMode={isDarkMode} />
+        <BookedDatesExpand
+          arr={bookedDates}
+          isDarkMode={isDarkMode}
+          className="bookedDates"
+        />
       </Grid>
     </Grid>
   );

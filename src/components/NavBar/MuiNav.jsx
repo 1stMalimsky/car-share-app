@@ -1,10 +1,9 @@
 import * as React from "react";
+import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { darkThemeActions } from "../../store/darkTheme";
 import { authActions } from "../../store/auth";
-import Container from "@mui/material/Container";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
+import { Container, AppBar, Box, Hidden } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";

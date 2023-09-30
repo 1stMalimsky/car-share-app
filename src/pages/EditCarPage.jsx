@@ -118,17 +118,15 @@ const EditCarPage = () => {
           <EditIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Edit card
+          Edit Car
         </Typography>
         <Box
           component="img"
           sx={{
-            height: 233,
-            width: 350,
-            maxHeight: { xs: 233, md: 167 },
-            maxWidth: { xs: 350, md: 250 },
+            maxHeight: 350,
+            maxWidth: 350,
           }}
-          alt={inputState.alt ? inputState.alt : ""}
+          alt={inputState.alt ? inputState.alt : "no image provided"}
           src={inputState.url ? inputState.url : atom}
         />
         <Box component="div" noValidate sx={{ mt: 3 }}>

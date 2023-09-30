@@ -27,8 +27,10 @@ const CarCardComponent = ({
   price,
   loggedIn,
   isLiked,
+  isAdmin,
   handleLikeClick,
   handleCheckOutClick,
+  handleDeleteClick,
 }) => {
   const [likeStatus, setLikeStatus] = useState(isLiked);
   const [ownerProfile, setOwnerData] = useState(null);
@@ -38,7 +40,7 @@ const CarCardComponent = ({
     handleLikeClick(id);
   };
 
-  const ownerData = async (id) => {
+  const ownerData = async () => {
     try {
       const { data } = await axios.get("/user/" + user_id);
       delete data.password;
@@ -56,6 +58,10 @@ const CarCardComponent = ({
 
   const handleCheckOut = () => {
     handleCheckOutClick(id);
+  };
+
+  const deleteCar = () => {
+    handleDeleteClick(id);
   };
 
   if (!ownerProfile) {
@@ -106,13 +112,23 @@ const CarCardComponent = ({
       </Grid>
       {/* buttons */}
       <Grid item xs={12} className="carCardBtnSection">
-        <Button
-          variant="contained"
-          className="cardBtn"
-          onClick={handleCheckOut}
-        >
-          Rent
-        </Button>
+        {!isAdmin ? (
+          <Button
+            variant="contained"
+            className="cardBtn"
+            onClick={handleCheckOut}
+          >
+            Rent
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={deleteCar}
+            sx={{ background: "red" }}
+          >
+            Delete
+          </Button>
+        )}
         <IconButton
           onClick={likeClicked}
           sx={{ display: loggedIn ? "block" : "none" }}

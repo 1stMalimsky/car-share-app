@@ -16,6 +16,7 @@ import ProfilePage from "../pages/ProfilePage";
 import AddNewCarPage from "../pages/AddNewCarPage";
 import LikedCarsPage from "../pages/LikedCarsPage";
 import FinalizePage from "../pages/FinalizePage";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const Router = () => {
   return (
@@ -39,7 +40,12 @@ const Router = () => {
       <Route path={ROUTES.LIKEDCARS} element={<LikedCarsPage />} />
       <Route path={ROUTES.ADDCAR} element={<AddNewCarPage />} />
       <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-      <Route path={ROUTES.ADMIN} element={<AdminControls />} />
+      <Route
+        path={ROUTES.ADMIN}
+        element={
+          <ProtectedRoute needAdmin={true} element={<AdminControls />} />
+        }
+      />
       <Route
         path={ROUTES.LOGOUT}
         element={<LogoutRoute element={<LogoutLink />} />}

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import FooterComponent from "./components/FooterComponent";
 
 const light = {
   palette: {
@@ -55,7 +56,9 @@ function App() {
           <Navbar />
         </header>
         <main>{isLoading ? <CircularProgress /> : <Router />}</main>
-        <footer></footer>
+        <footer>
+          <FooterComponent />
+        </footer>
       </Container>
     </ThemeProvider>
   );

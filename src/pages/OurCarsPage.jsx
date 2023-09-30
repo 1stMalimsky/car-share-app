@@ -4,7 +4,6 @@ import {
   Box,
   Grid,
   CircularProgress,
-  Modal,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,7 +15,7 @@ import useSort from "../hooks/useSort";
 import axios from "axios";
 import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
-import CarInfoModal from "../components/CarInfoModal";
+import { useNavigate } from "react-router-dom";
 
 const OurCarsPage = () => {
   const [sortPick, setSortPick] = useState("");
@@ -26,6 +25,7 @@ const OurCarsPage = () => {
   const isDarkTheme = useSelector(
     (storePie) => storePie.darkThemeSlice.isDarkTheme
   );
+  const navigate = useNavigate();
   let qparams = useQueryParams();
   const thisUser = useSelector((storePie) => storePie.authSlice) || null;
 
@@ -54,7 +54,9 @@ const OurCarsPage = () => {
     if (!originalCars && data) {
       setOriginalCars(data);
       let searchResult = arrToSearch.filter(
-        (car) => car.title.startsWith(filter) || car.carType.startsWith(filter)
+        (car) =>
+          car.title.toLowerCase().startsWith(filter.toLowerCase()) ||
+          car.carType.toLowerCase().startsWith(filter.toLowerCase())
       );
       setCars(searchResult);
       return;
@@ -62,8 +64,9 @@ const OurCarsPage = () => {
     if (originalCars) {
       let newOriginalCars = JSON.parse(JSON.stringify(originalCars));
       let searchResult = newOriginalCars.filter(
-        (card) =>
-          card.title.startsWith(filter) || card.carType.startsWith(filter)
+        (car) =>
+          car.title.toLowerCase().startsWith(filter.toLowerCase()) ||
+          car.carType.toLowerCase().startsWith(filter.toLowerCase())
       );
       setCars(searchResult);
     }
@@ -82,7 +85,8 @@ const OurCarsPage = () => {
     setSortView(value);
   };
   const rentBtnClick = () => {
-    console.log("rent btn clicked");
+    toast.success("Please pick dates to see if the car you chose is available");
+    navigate("/");
   };
 
   const likeClick = async (id) => {
@@ -91,6 +95,10 @@ const OurCarsPage = () => {
     } catch (err) {
       console.log("like update error", err);
     }
+  };
+
+  const handleDelete = () => {
+    console.log("This is a fake function");
   };
 
   if (!cars.length === 0) {
@@ -120,8 +128,13 @@ const OurCarsPage = () => {
         </Box>
         <Box sx={{ display: "flex" }}>
           {/* SIDE MENU */}
-          <Grid container sx={{ maxWidth: "15em" }}>
-            <Grid item xs={8} className="ourCarsSideGridItem">
+          <Grid container className="ourCarsSideGridContainer">
+            <Grid
+              item
+              xs={8}
+              className="ourCarsSideGridItem"
+              sx={{ display: cars.length === 0 ? "none" : "block" }}
+            >
               <SortComponent onSortClick={sortBtnClick} />
               <SortViewComponent onSortClick={handleSortView} />
             </Grid>
@@ -151,9 +164,12 @@ const OurCarsPage = () => {
                     houseNumber={car.address.houseNumber}
                     phone={car.phone}
                     price={car.price}
-                    loggedIn={thisUser.isLoggedIn || false}
+                    isAdmin={false}
+                    adminControls={false}
                     handleCheckOutClick={rentBtnClick}
                     handleLikeClick={likeClick}
+                    handleDelete={handleDelete}
+                    isDarkMode={isDarkTheme}
                     isLiked={
                       thisUser.payload !== null
                         ? car.likes.includes(thisUser.payload.userId)

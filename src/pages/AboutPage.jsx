@@ -70,7 +70,8 @@ const AboutPage = () => {
               <Typography className="aboutTxt">
                 Check out our collection of cars and find the perfect match for
                 you! To find a car, input your deseired rental dates and we'll
-                show you everything we have to offer.
+                show you everything we have to offer. Payment is made directly
+                with the car owner and is not proccesed through us.
               </Typography>
             </Box>
             <br />

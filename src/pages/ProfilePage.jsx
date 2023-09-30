@@ -122,9 +122,8 @@ const EditProfilePage = () => {
         <Box
           component="img"
           sx={{
-            height: 233,
-            width: 350,
-            maxWidth: { xs: 350, md: 250 },
+            maxWidth: 350,
+            maxHeight: 350,
           }}
           alt={inputState.alt ? inputState.alt : ""}
           src={inputState.url ? inputState.url : atom}

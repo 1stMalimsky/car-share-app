@@ -29,3 +29,13 @@
   font-family: belanosima !important;
   text-decoration: none;
 }
+
+.searchPartial {
+  display: block;
+}
+
+@media (max-width: 400px) {
+  .searchPartial {
+    display: none !important;
+  }
+}

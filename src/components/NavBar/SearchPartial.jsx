@@ -58,7 +58,7 @@ const SearchPartial = () => {
     navigate(`${ROUTES.OURCARS}?filter=${searchInput}`);
   };
   return (
-    <form onSubmit={handleSearchSubmit}>
+    <form onSubmit={handleSearchSubmit} className="searchPartial">
       <Search>
         <SearchIconWrapper>
           <SearchIcon />

@@ -9,7 +9,6 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CarCardComponent from "./CarCard";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
-import CarInfoModal from "../CarInfoModal";
 
 const CarCardListView = ({
   id,
@@ -25,39 +24,24 @@ const CarCardListView = ({
   houseNumber,
   phone,
   price,
-  loggedIn,
+  isAdmin,
+  adminControls,
   isLiked,
   handleLikeClick,
   handleCheckOutClick,
+  handleDelete,
+  isDarkMode,
 }) => {
   const [likeStatus, setLikeStatus] = useState(isLiked);
   const [open, setOpen] = useState(false);
   const [ownerProfile, setOwnerData] = useState(null);
-  const [modalInfo, setModalInfo] = useState({
-    id,
-    user_id,
-    title,
-    description,
-    url,
-    alt,
-    carType,
-    carModel,
-    city,
-    street,
-    houseNumber,
-    phone,
-    price,
-    loggedIn,
-    isLiked,
-    handleLikeClick,
-    handleCheckOutClick,
-  });
+
   const likeClicked = () => {
     setLikeStatus((prevLikeStatus) => !prevLikeStatus);
-    handleLikeClick();
+    handleLikeClick(id);
   };
 
-  const ownerData = async (id) => {
+  const ownerData = async () => {
     try {
       const { data } = await axios.get("/user/" + user_id);
       delete data.password;
@@ -74,7 +58,7 @@ const CarCardListView = ({
   }, []);
 
   const handleCheckOut = () => {
-    handleCheckOutClick(id);
+    handleCheckOutClick();
   };
 
   const handleOpen = () => {
@@ -83,6 +67,10 @@ const CarCardListView = ({
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const deleteCar = () => {
+    handleDelete(id);
   };
 
   if (!ownerProfile) {
@@ -100,7 +88,7 @@ const CarCardListView = ({
           className="cardModalList"
         >
           {/* img item */}
-          <Grid item xs={12} sm={2} className="carCardImgItem">
+          <Grid item xs={12} sm={3} className="carCardImgItem">
             <img src={url} alt={alt} className="imgURL" />
           </Grid>
           <Grid item xs={12} sm={2}>
@@ -108,64 +96,61 @@ const CarCardListView = ({
               {title}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={3}>
             <Typography variant="body1" component="div">
               Car Type: {carType}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <Typography variant="body1" component="div">
-              Price (per day): ₪{price}
-            </Typography>
-          </Grid>
+          {!adminControls ? (
+            <Grid item xs={12} sm={3}>
+              <Typography variant="body1" component="div">
+                Price (per day): ₪{price}
+              </Typography>
+            </Grid>
+          ) : null}
         </Grid>
-        <Grid item xs={12} sm={2} className="carCardBtnSection">
-          <Button
-            variant="contained"
-            className="cardBtn"
-            onClick={handleCheckOut}
-          >
-            Rent
-          </Button>
-          <IconButton
-            onClick={likeClicked}
-            sx={{ display: loggedIn ? "block" : "none" }}
-          >
-            {likeStatus ? (
-              <FavoriteIcon fontSize="large" />
-            ) : (
-              <FavoriteBorderIcon fontSize="large" />
-            )}
-          </IconButton>
+
+        <Grid item xs={2} className="carCardBtnSection">
+          {!isAdmin ? (
+            <Button
+              variant="contained"
+              className="cardBtn"
+              onClick={handleCheckOut}
+            >
+              Rent
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={deleteCar}
+              sx={{ background: "red" }}
+            >
+              Delete
+            </Button>
+          )}
         </Grid>
       </Grid>
-      <Modal open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            maxWidth: "50%",
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+      <Modal open={open} onClose={handleClose} className="infoModal">
+        <Box className={isDarkMode ? "carInfoModalBoxDark" : "carInfoModalBox"}>
           <CarCardComponent
-            id={modalInfo.id}
-            user_id={modalInfo.user_id}
-            title={modalInfo.title}
-            description={modalInfo.description}
-            url={modalInfo.url}
-            alt={modalInfo.alt}
-            carType={modalInfo.carType}
-            carModel={modalInfo.carModel}
-            city={modalInfo.city}
-            street={modalInfo.street}
-            houseNumber={modalInfo.houseNumber}
-            phone={modalInfo.phone}
-            price={modalInfo.price}
-            loggedIn={modalInfo.loggedIn}
-            isLiked={modalInfo.isLiked}
-            handleLikeClick={modalInfo.handleLikeClick}
-            handleCheckOutClick={modalInfo.handleCheckOutClick}
+            id={id}
+            user_id={user_id}
+            title={title}
+            description={description}
+            url={url}
+            alt={alt}
+            carType={carType}
+            carModel={carModel}
+            city={city}
+            street={street}
+            houseNumber={houseNumber}
+            phone={phone}
+            price={price}
+            loggedIn={false}
+            isAdmin={isAdmin}
+            handleLikeClick={handleLikeClick}
+            handleCheckOutClick={handleCheckOutClick}
+            handleDeleteClick={deleteCar}
           />
         </Box>
       </Modal>
