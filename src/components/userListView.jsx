@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import AboutOwnerExpand from "./AboutOwnerExpand";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
 
 const UserListView = ({
   id,
@@ -27,6 +28,7 @@ const UserListView = ({
       delete data.__v;
       setOwnerData(data);
     } catch (err) {
+      toast.error("owner Data err");
       console.log("owner Data err", err);
     }
   };

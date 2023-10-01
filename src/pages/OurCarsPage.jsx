@@ -91,6 +91,7 @@ const OurCarsPage = () => {
 
   const likeClick = async (id) => {
     try {
+      console.log("like clicked");
       await axios.patch(`/cars/like/${id}`);
     } catch (err) {
       console.log("like update error", err);
@@ -139,72 +140,73 @@ const OurCarsPage = () => {
               <SortViewComponent onSortClick={handleSortView} />
             </Grid>
             {/* CAR CARD */}
-            {cars.map((car) => (
-              <Grid
-                item
-                xs={12}
-                sm={9}
-                className="cardGridItem"
-                key={car.title + Date.now()}
-              >
-                {sortView == "List" ? (
-                  <CarCardListView
-                    id={car._id}
-                    user_id={car.user_id}
-                    title={car.title}
-                    description={car.description}
-                    url={car.image.url}
-                    alt={car.image.alt}
-                    carType={car.carType}
-                    carModel={car.carModel}
-                    city={car.address.city}
-                    street={car.address.street}
-                    houseNumber={car.address.houseNumber}
-                    phone={car.phone}
-                    price={car.price}
-                    isAdmin={false}
-                    adminControls={false}
-                    handleCheckOutClick={rentBtnClick}
-                    handleLikeClick={likeClick}
-                    handleDelete={handleDelete}
-                    isDarkMode={isDarkTheme}
-                    isLiked={
-                      thisUser.payload !== null
-                        ? car.likes.includes(thisUser.payload.userId)
-                          ? true
+            <Grid item xs={12} sm={10}>
+              {cars.map((car) => (
+                <Grid
+                  item
+                  xs={12}
+                  className="cardGridItem"
+                  key={car.title + Date.now()}
+                >
+                  {sortView == "List" ? (
+                    <CarCardListView
+                      id={car._id}
+                      user_id={car.user_id}
+                      title={car.title}
+                      description={car.description}
+                      url={car.image.url}
+                      alt={car.image.alt}
+                      carType={car.carType}
+                      carModel={car.carModel}
+                      city={car.address.city}
+                      street={car.address.street}
+                      houseNumber={car.address.houseNumber}
+                      phone={car.phone}
+                      price={car.price}
+                      isAdmin={false}
+                      adminControls={false}
+                      handleCheckOutClick={rentBtnClick}
+                      handleLikeClick={likeClick}
+                      handleDelete={handleDelete}
+                      isDarkMode={isDarkTheme}
+                      isLiked={
+                        thisUser.payload !== null
+                          ? car.likes.includes(thisUser.payload.userId)
+                            ? true
+                            : false
                           : false
-                        : false
-                    }
-                  />
-                ) : (
-                  <CarCardComponent
-                    id={car._id}
-                    user_id={car.user_id}
-                    title={car.title}
-                    description={car.description}
-                    url={car.image.url}
-                    alt={car.image.alt}
-                    carType={car.carType}
-                    carModel={car.carModel}
-                    city={car.address.city}
-                    street={car.address.street}
-                    houseNumber={car.address.houseNumber}
-                    phone={car.phone}
-                    price={car.price}
-                    loggedIn={thisUser.isLoggedIn || false}
-                    handleCheckOutClick={rentBtnClick}
-                    handleLikeClick={likeClick}
-                    isLiked={
-                      thisUser.payload !== null
-                        ? car.likes.includes(thisUser.payload.userId)
-                          ? true
+                      }
+                    />
+                  ) : (
+                    <CarCardComponent
+                      id={car._id}
+                      user_id={car.user_id}
+                      title={car.title}
+                      description={car.description}
+                      url={car.image.url}
+                      alt={car.image.alt}
+                      carType={car.carType}
+                      carModel={car.carModel}
+                      city={car.address.city}
+                      street={car.address.street}
+                      houseNumber={car.address.houseNumber}
+                      phone={car.phone}
+                      price={car.price}
+                      loggedIn={thisUser.isLoggedIn || false}
+                      handleCheckOutClick={rentBtnClick}
+                      handleLikeClick={likeClick}
+                      isLiked={
+                        thisUser.payload !== null
+                          ? car.likes.includes(thisUser.payload.userId)
+                            ? true
+                            : false
                           : false
-                        : false
-                    }
-                  />
-                )}
-              </Grid>
-            ))}
+                      }
+                    />
+                  )}
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
         </Box>
       </Box>

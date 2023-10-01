@@ -76,7 +76,6 @@ const EditProfilePage = () => {
     try {
       const updatedInputState = { ...inputState };
       const joiResponse = validateProfileSchema(updatedInputState);
-      console.log("joi Response", joiResponse);
       setInputsErrorsState(joiResponse);
       if (!joiResponse) {
         normalizeUser(updatedInputState);

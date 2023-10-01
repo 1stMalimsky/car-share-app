@@ -26,17 +26,27 @@ const Router = () => {
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={"/car-inv/:start/:end/"} element={<CarInventoryPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+      <Route path={ROUTES.OURCARS} element={<OurCarsPage />} />
       <Route
-        path={ROUTES.OURCARS}
+        path={ROUTES.MYCARS}
         element={
-          <ProtectedRoute needAdmin={false} element={<LikedCarsPage />} />
+          <ProtectedRoute
+            needLoggedIn={true}
+            needAdmin={false}
+            element={<MyCars />}
+          />
         }
       />
       <Route
-        path={ROUTES.MYCARS}
-        element={<ProtectedRoute needAdmin={false} element={<MyCars />} />}
+        path={"/edit/:id"}
+        element={
+          <ProtectedRoute
+            needLoggedIn={true}
+            needAdmin={false}
+            element={<EditCarPage />}
+          />
+        }
       />
-      <Route path={"/edit/:id"} element={<EditCarPage />} />
       <Route
         path={"/checkout/:id/:start/:end/:numOfDays"}
         element={<CheckoutPage />}
@@ -48,23 +58,41 @@ const Router = () => {
       <Route
         path={ROUTES.LIKEDCARS}
         element={
-          <ProtectedRoute needAdmin={false} element={<LikedCarsPage />} />
+          <ProtectedRoute
+            needLoggedIn={true}
+            needAdmin={false}
+            element={<LikedCarsPage />}
+          />
         }
       />
       <Route
         path={ROUTES.ADDCAR}
         element={
-          <ProtectedRoute needAdmin={false} element={<AddNewCarPage />} />
+          <ProtectedRoute
+            needLoggedIn={true}
+            needAdmin={false}
+            element={<AddNewCarPage />}
+          />
         }
       />
       <Route
         path={ROUTES.PROFILE}
-        element={<ProtectedRoute needAdmin={false} element={<ProfilePage />} />}
+        element={
+          <ProtectedRoute
+            needLoggedIn={true}
+            needAdmin={false}
+            element={<ProfilePage />}
+          />
+        }
       />
       <Route
         path={ROUTES.ADMIN}
         element={
-          <ProtectedRoute needAdmin={true} element={<AdminControls />} />
+          <ProtectedRoute
+            needLoggedIn={true}
+            needAdmin={true}
+            element={<AdminControls />}
+          />
         }
       />
       <Route

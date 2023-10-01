@@ -15,6 +15,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import finalizeInputs from "../utils/finalizeInputs";
 import validateBooking from "../validation/bookingValidation";
+import { useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
   const [chosenCar, setChosenCar] = useState(null);
@@ -29,6 +30,7 @@ const PaymentPage = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const params = useParams();
+  const navigate = useNavigate();
   const user = useSelector((storePie) => storePie.authSlice);
 
   useEffect(() => {
@@ -99,7 +101,10 @@ const PaymentPage = () => {
         end: +chosenDates.end,
       };
       await axios.put("/cars/book/" + params.id, datesToSend);
-      toast.success("Your Car Has Been Reserved");
+      toast.success(
+        "Your Car Has Been Reserved! \n Please contact the owner to settle payment"
+      );
+      navigate("/");
     } catch (err) {
       toast.error("Unexpoected error occured");
       console.log("finalize error", err);

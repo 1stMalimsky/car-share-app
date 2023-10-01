@@ -223,6 +223,13 @@
     width: 80% !important;
     margin-bottom: 0.8em !important;
   }
+  .cardModalList {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
 }
 .cardGridItem {
   display: flex;

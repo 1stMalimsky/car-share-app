@@ -55,6 +55,7 @@ const LoginPage = () => {
       login();
       navigate(ROUTES.HOME);
     } catch (err) {
+      toast.error("Email or password incorrect. Try again");
       console.log("login error", err);
     }
   };

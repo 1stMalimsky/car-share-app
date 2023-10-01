@@ -38,7 +38,7 @@ const FinalizeCarCard = ({
       .catch((err) => {
         console.log("error from axios", err);
       });
-  }, []);
+  });
 
   const likeClicked = () => {
     handleLikeClick(id);
